@@ -8,7 +8,7 @@ package za.co.sindi.jsonweb.jose.jwk;
  * @since 07 April 2016
  *
  */
-public interface EllipticCurveJWK {
+public interface EllipticCurveJWK extends JWK {
 
 	public ECCurve getCurve();
 }

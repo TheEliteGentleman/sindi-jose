@@ -10,7 +10,7 @@ import za.co.sindi.jsonweb.Base64URLUInt;
  * @since 08 April 2016
  *
  */
-public interface RSAJWK {
+public interface RSAJWK extends JWK {
 
 	public Base64URLUInt getModulus();
 	public Base64URLUInt getPublicExponent();

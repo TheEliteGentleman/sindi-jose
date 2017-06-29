@@ -3,9 +3,7 @@
  */
 package za.co.sindi.jsonweb.jose.jwk;
 
-import za.co.sindi.common.utils.PreConditions;
 import za.co.sindi.jsonweb.Base64URLUInt;
-import za.co.sindi.jsonweb.json.JSONObject;
 import za.co.sindi.jsonweb.json.JSONObjectBuilder;
 
 /**
@@ -26,19 +24,19 @@ public abstract class AbstractEllipticCurveJWK extends AbstractJWK implements El
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractJWK#read(za.co.sindi.jsonweb.json.JSONObject)
-	 */
-	@Override
-	public void read(JSONObject jsonObject) throws Exception {
-		// TODO Auto-generated method stub
-		super.read(jsonObject);
-		PreConditions.checkState(!jsonObject.isNull(Constants.EC_PARAM_CURVE), "No JWK Elliptic Curve parameter '" + Constants.EC_PARAM_CURVE + "' found.");
-		PreConditions.checkState(!jsonObject.isNull(Constants.EC_PARAM_X_COORDINATE), "No JWK Elliptic Curve parameter '" + Constants.EC_PARAM_X_COORDINATE + "' found.");
-		
-		setCurve(ECCurve.of(jsonObject.getString(Constants.EC_PARAM_CURVE)));
-		setCoordinateX(new Base64URLUInt(jsonObject.getString(Constants.EC_PARAM_X_COORDINATE)));
-	}
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractJWK#read(za.co.sindi.jsonweb.json.JSONObject)
+//	 */
+//	@Override
+//	public void read(JSONObject jsonObject) throws Exception {
+//		// TODO Auto-generated method stub
+//		super.read(jsonObject);
+//		PreConditions.checkState(!jsonObject.isNull(Constants.EC_PARAM_CURVE), "No JWK Elliptic Curve parameter '" + Constants.EC_PARAM_CURVE + "' found.");
+//		PreConditions.checkState(!jsonObject.isNull(Constants.EC_PARAM_X_COORDINATE), "No JWK Elliptic Curve parameter '" + Constants.EC_PARAM_X_COORDINATE + "' found.");
+//		
+//		setCurve(ECCurve.of(jsonObject.getString(Constants.EC_PARAM_CURVE)));
+//		setCoordinateX(new Base64URLUInt(jsonObject.getString(Constants.EC_PARAM_X_COORDINATE)));
+//	}
 
 //	/* (non-Javadoc)
 //	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractJWK#readFully(za.co.sindi.jsonweb.json.JSONObject)
@@ -60,8 +58,8 @@ public abstract class AbstractEllipticCurveJWK extends AbstractJWK implements El
 	@Override
 	protected void populateJSONObject(JSONObjectBuilder jsonObjectBuilder) {
 		// TODO Auto-generated method stub
-		jsonObjectBuilder.add(Constants.EC_PARAM_CURVE, getCurve().toString());
-		jsonObjectBuilder.add(Constants.EC_PARAM_X_COORDINATE, getCoordinateX().getJSONValue());
+		jsonObjectBuilder.add(JWKConstants.EC_PARAM_CURVE, getCurve().toString());
+		jsonObjectBuilder.add(JWKConstants.EC_PARAM_X_COORDINATE, getCoordinateX().getJSONValue());
 //		populateJSONObjectInternally(jsonObjectBuilder);
 	}
 
@@ -74,7 +72,7 @@ public abstract class AbstractEllipticCurveJWK extends AbstractJWK implements El
 		return curve;
 	}
 	
-	protected void setCurve(ECCurve curve) {
+	public void setCurve(ECCurve curve) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.EC_PARAM_CURVE, curve);
 		this.curve = curve;
@@ -89,7 +87,7 @@ public abstract class AbstractEllipticCurveJWK extends AbstractJWK implements El
 		return coordinateX;
 	}
 	
-	protected void setCoordinateX(Base64URLUInt coordinateX) {
+	public void setCoordinateX(Base64URLUInt coordinateX) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.EC_PARAM_X_COORDINATE, coordinateX);
 		this.coordinateX = coordinateX;

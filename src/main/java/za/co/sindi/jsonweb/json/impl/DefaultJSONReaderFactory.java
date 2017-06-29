@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
-import net.sf.json.JSONException;
+import za.co.sindi.jsonweb.json.JSONException;
 import za.co.sindi.jsonweb.json.JSONReader;
 import za.co.sindi.jsonweb.json.JSONReaderFactory;
 

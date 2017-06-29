@@ -3,9 +3,7 @@
  */
 package za.co.sindi.jsonweb.jose.jwk;
 
-import java.io.ByteArrayInputStream;
 import java.net.URI;
-import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,10 +11,7 @@ import java.util.List;
 
 import za.co.sindi.common.utils.PreConditions;
 import za.co.sindi.jsonweb.AbstractJWObject;
-import za.co.sindi.jsonweb.Base64URLBytes;
 import za.co.sindi.jsonweb.jose.jwa.Algorithm;
-import za.co.sindi.jsonweb.jose.jwa.Algorithms;
-import za.co.sindi.jsonweb.json.JSONArray;
 import za.co.sindi.jsonweb.json.JSONArrayBuilder;
 import za.co.sindi.jsonweb.json.JSONBuilderFactory;
 import za.co.sindi.jsonweb.json.JSONObject;
@@ -47,66 +42,66 @@ public abstract class AbstractJWK extends AbstractJWObject implements JWK {
 	 */
 	protected AbstractJWK(KeyType keyType) {
 		super();
-		PreConditions.checkArgument(keyType != null, "No " + Constants.JWK_KEY_TYPE + " was specified.");
+		PreConditions.checkArgument(keyType != null, "No " + JWKConstants.JWK_KEY_TYPE + " was specified.");
 		this.keyType = keyType;
 	}
 
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.JWObject#read(za.co.sindi.jsonweb.json.JSONObject)
-	 */
-	public void read(JSONObject jsonObject) throws Exception {
-		// TODO Auto-generated method stub
-		PreConditions.checkArgument(jsonObject != null, "No JSON object was provided.");
-		PreConditions.checkState(!jsonObject.isNull(Constants.JWK_KEY_TYPE), "No JWK parameter '" + Constants.JWK_KEY_TYPE + "' found.");
-		
-//		setKeyType(KeyType.of(jsonObject.getString(Constants.JWK_KEY_TYPE)));
-		keyType = KeyType.of(jsonObject.getString(Constants.JWK_KEY_TYPE));
-		
-		if (!jsonObject.isNull(Constants.JWK_PUBLIC_KEY_USE)) {
-			setPublicKeyUse(PublicKeyUse.of(jsonObject.getString(Constants.JWK_PUBLIC_KEY_USE)));
-		}
-		
-		if (!jsonObject.isNull(Constants.JWK_KEY_OPERATIONS)) {
-			JSONArray jsonArray = jsonObject.getJSONArray(Constants.JWK_KEY_OPERATIONS);
-			if (!jsonArray.isEmpty()) {
-				for (int i = 0; i < jsonArray.size(); i++) {
-					addKeyOperation(KeyOperation.of(jsonArray.getString(i)));
-				}
-			}
-		}
-		
-		if (!jsonObject.isNull(Constants.JWK_ALGORITHM)) {
-			setAlgorithm(Algorithms.getAlgorithm(jsonObject.getString(Constants.JWK_ALGORITHM)));
-		}
-		
-		if (!jsonObject.isNull(Constants.JWK_KEY_ID)) {
-			setKeyId(jsonObject.getString(Constants.JWK_KEY_ID));
-		}
-		
-		if (!jsonObject.isNull(Constants.JWK_X509_URL)) {
-			setX590URI(URI.create(jsonObject.getString(Constants.JWK_X509_URL)));
-		}
-		
-		if (!jsonObject.isNull(Constants.JWK_X509_CERTIFICATE_CHAIN)) {
-			JSONArray jsonArray = jsonObject.getJSONArray(Constants.JWK_X509_CERTIFICATE_CHAIN);
-			if (!jsonArray.isEmpty()) {
-				CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-				for (int i = 0; i < jsonArray.size(); i++) {
-					addX509Certificate((X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(new Base64URLBytes(jsonArray.getString(i)).getActualValue())));
-				}
-			}
-		}
-		
-		if (!jsonObject.isNull(Constants.JWK_X509_CERTIIFICATE_SHA1_THUMBPRINT)) {
-			setX509CertificateSHA1Thumbprint(jsonObject.getString(Constants.JWK_X509_CERTIIFICATE_SHA1_THUMBPRINT));
-		}
-		
-		if (!jsonObject.isNull(Constants.JWK_X509_CERTIFICATE_SHA256_THUMBPRINT)) {
-			setX509CertificateSHA1Thumbprint(jsonObject.getString(Constants.JWK_X509_CERTIFICATE_SHA256_THUMBPRINT));
-		}
-		
-//		readFully(jsonObject);
-	}
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.JWObject#read(za.co.sindi.jsonweb.json.JSONObject)
+//	 */
+//	public void read(JSONObject jsonObject) throws Exception {
+//		// TODO Auto-generated method stub
+//		PreConditions.checkArgument(jsonObject != null, "No JSON object was provided.");
+//		PreConditions.checkState(!jsonObject.isNull(Constants.JWK_KEY_TYPE), "No JWK parameter '" + Constants.JWK_KEY_TYPE + "' found.");
+//		
+////		setKeyType(KeyType.of(jsonObject.getString(Constants.JWK_KEY_TYPE)));
+//		keyType = KeyType.of(jsonObject.getString(Constants.JWK_KEY_TYPE));
+//		
+//		if (!jsonObject.isNull(Constants.JWK_PUBLIC_KEY_USE)) {
+//			setPublicKeyUse(PublicKeyUse.of(jsonObject.getString(Constants.JWK_PUBLIC_KEY_USE)));
+//		}
+//		
+//		if (!jsonObject.isNull(Constants.JWK_KEY_OPERATIONS)) {
+//			JSONArray jsonArray = jsonObject.getJSONArray(Constants.JWK_KEY_OPERATIONS);
+//			if (!jsonArray.isEmpty()) {
+//				for (int i = 0; i < jsonArray.size(); i++) {
+//					addKeyOperation(KeyOperation.of(jsonArray.getString(i)));
+//				}
+//			}
+//		}
+//		
+//		if (!jsonObject.isNull(Constants.JWK_ALGORITHM)) {
+//			setAlgorithm(Algorithms.getAlgorithm(jsonObject.getString(Constants.JWK_ALGORITHM)));
+//		}
+//		
+//		if (!jsonObject.isNull(Constants.JWK_KEY_ID)) {
+//			setKeyId(jsonObject.getString(Constants.JWK_KEY_ID));
+//		}
+//		
+//		if (!jsonObject.isNull(Constants.JWK_X509_URL)) {
+//			setX590URI(URI.create(jsonObject.getString(Constants.JWK_X509_URL)));
+//		}
+//		
+//		if (!jsonObject.isNull(Constants.JWK_X509_CERTIFICATE_CHAIN)) {
+//			JSONArray jsonArray = jsonObject.getJSONArray(Constants.JWK_X509_CERTIFICATE_CHAIN);
+//			if (!jsonArray.isEmpty()) {
+//				CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+//				for (int i = 0; i < jsonArray.size(); i++) {
+//					addX509Certificate((X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(new Base64URLBytes(jsonArray.getString(i)).getActualValue())));
+//				}
+//			}
+//		}
+//		
+//		if (!jsonObject.isNull(Constants.JWK_X509_CERTIIFICATE_SHA1_THUMBPRINT)) {
+//			setX509CertificateSHA1Thumbprint(jsonObject.getString(Constants.JWK_X509_CERTIIFICATE_SHA1_THUMBPRINT));
+//		}
+//		
+//		if (!jsonObject.isNull(Constants.JWK_X509_CERTIFICATE_SHA256_THUMBPRINT)) {
+//			setX509CertificateSHA1Thumbprint(jsonObject.getString(Constants.JWK_X509_CERTIFICATE_SHA256_THUMBPRINT));
+//		}
+//		
+////		readFully(jsonObject);
+//	}
 
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.JWObject#toJSONObject()
@@ -116,11 +111,11 @@ public abstract class AbstractJWK extends AbstractJWObject implements JWK {
 		JSONBuilderFactory factory = new DefaultJSONBuilderFactory();
 		JSONObjectBuilder jsonObjectBuilder = factory.createJSONObjectBuilder();
 		
-		jsonObjectBuilder.add(Constants.JWK_KEY_TYPE, getKeyType().toString());
+		jsonObjectBuilder.add(JWKConstants.JWK_KEY_TYPE, getKeyType().toString());
 		
 		PublicKeyUse keyUse = getPublicKeyUse();
 		if (keyUse != null) {
-			jsonObjectBuilder.add(Constants.JWK_PUBLIC_KEY_USE, keyUse.toString());
+			jsonObjectBuilder.add(JWKConstants.JWK_PUBLIC_KEY_USE, keyUse.toString());
 		}
 		
 		KeyOperation[] operations = getKeyOperations();
@@ -130,22 +125,22 @@ public abstract class AbstractJWK extends AbstractJWObject implements JWK {
 				jsonArrayBuilder.add(operation.toString());
 			}
 			
-			jsonObjectBuilder.add(Constants.JWK_KEY_OPERATIONS, jsonArrayBuilder);
+			jsonObjectBuilder.add(JWKConstants.JWK_KEY_OPERATIONS, jsonArrayBuilder);
 		}
 		
 		Algorithm algorithm = getAlgorithm();
 		if (algorithm != null) {
-			jsonObjectBuilder.add(Constants.JWK_ALGORITHM, algorithm.getJwaAlgorithmName());
+			jsonObjectBuilder.add(JWKConstants.JWK_ALGORITHM, algorithm.getJwaAlgorithmName());
 		}
 		
 		String keyId = getKeyId();
 		if (keyId != null) {
-			jsonObjectBuilder.add(Constants.JWK_KEY_ID, keyId);
+			jsonObjectBuilder.add(JWKConstants.JWK_KEY_ID, keyId);
 		}
 		
 		URI x509URI = getX509URI();
 		if (x509URI != null) {
-			jsonObjectBuilder.add(Constants.JWK_X509_URL, x509URI.toString());
+			jsonObjectBuilder.add(JWKConstants.JWK_X509_URL, x509URI.toString());
 		}
 		
 		X509Certificate[] x509CertificateChains = getX509CertificateChains();
@@ -155,17 +150,17 @@ public abstract class AbstractJWK extends AbstractJWObject implements JWK {
 				jsonArrayBuilder.add(X509CertificateUtils.base64Encode(x509CertificateChain));
 			}
 			
-			jsonObjectBuilder.add(Constants.JWK_X509_CERTIFICATE_CHAIN, jsonArrayBuilder);
+			jsonObjectBuilder.add(JWKConstants.JWK_X509_CERTIFICATE_CHAIN, jsonArrayBuilder);
 		}
 		
 		String x509SHA1Thumbprint = getX509CertificateSHA1Thumbprint();
 		if (x509SHA1Thumbprint != null) {
-			jsonObjectBuilder.add(Constants.JWK_X509_CERTIIFICATE_SHA1_THUMBPRINT, x509SHA1Thumbprint);
+			jsonObjectBuilder.add(JWKConstants.JWK_X509_CERTIIFICATE_SHA1_THUMBPRINT, x509SHA1Thumbprint);
 		}
 		
 		String x509SHA256Thumbprint = getX509CertificateSHA256Thumbprint();
 		if (x509SHA256Thumbprint != null) {
-			jsonObjectBuilder.add(Constants.JWK_X509_CERTIFICATE_SHA256_THUMBPRINT, x509SHA256Thumbprint);
+			jsonObjectBuilder.add(JWKConstants.JWK_X509_CERTIFICATE_SHA256_THUMBPRINT, x509SHA256Thumbprint);
 		}
 		
 		populateJSONObject(jsonObjectBuilder);
@@ -226,11 +221,11 @@ public abstract class AbstractJWK extends AbstractJWObject implements JWK {
 		// TODO Auto-generated method stub
 //		@SuppressWarnings("unchecked")
 //		List<KeyOperation> keyOperations = (List<KeyOperation>) getParameter(Constants.JWK_KEY_OPERATIONS);
-		if (keyOperations != null) {
-			return keyOperations.toArray(new KeyOperation[keyOperations.size()]);
+		if (keyOperations == null) {
+			return null;
 		}
 		
-		return null;
+		return keyOperations.toArray(new KeyOperation[keyOperations.size()]);
 	}
 
 	/* (non-Javadoc)

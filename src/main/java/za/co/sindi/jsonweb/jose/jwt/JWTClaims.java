@@ -15,20 +15,20 @@ import za.co.sindi.jsonweb.StringOrURI;
 public interface JWTClaims extends JWObject {
 
 	public StringOrURI getIssuer();
-	public void setIssuer(final StringOrURI issuer);
+//	public void setIssuer(final StringOrURI issuer);
 	
 	public StringOrURI getSubject();
-	public void setSubject(final StringOrURI subject);
+//	public void setSubject(final StringOrURI subject);
 	
 	public NumericDate getExpirationTime();
-	public void setExpirationTime(final NumericDate expirationTime);
+//	public void setExpirationTime(final NumericDate expirationTime);
 	
 	public NumericDate getNotBefore();
-	public void setNotBefore(final NumericDate notBefore);
+//	public void setNotBefore(final NumericDate notBefore);
 	
 	public NumericDate getIssuedAt();
-	public void setIssuedAt(final NumericDate issuedAt);
+//	public void setIssuedAt(final NumericDate issuedAt);
 	
 	public String getJwtID();
-	public void setJwtID(final String jwtID);
+//	public void setJwtID(final String jwtID);
 }

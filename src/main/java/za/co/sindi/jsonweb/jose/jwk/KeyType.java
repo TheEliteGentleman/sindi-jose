@@ -12,9 +12,9 @@ import za.co.sindi.jsonweb.Requirement;
  */
 public final class KeyType {
 
-	public static final KeyType EC = new KeyType(Constants.KTY_EC, "Elliptic Curve", Requirement.RECOMMENDED);
-	public static final KeyType RSA = new KeyType(Constants.KTY_RSA, "RSA", Requirement.REQUIRED);
-	public static final KeyType OCT = new KeyType(Constants.KTY_OCT, "Octet Sequence", Requirement.REQUIRED);
+	public static final KeyType EC = new KeyType(JWKConstants.KTY_EC, "Elliptic Curve", Requirement.RECOMMENDED);
+	public static final KeyType RSA = new KeyType(JWKConstants.KTY_RSA, "RSA", Requirement.REQUIRED);
+	public static final KeyType OCT = new KeyType(JWKConstants.KTY_OCT, "Octet Sequence", Requirement.REQUIRED);
 	
 	private final String parameterValue;
 	private final String description;

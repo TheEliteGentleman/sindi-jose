@@ -14,7 +14,7 @@ public interface JWKSet extends JWObject {
 
 	public JWK[] getAllKeys();
 	
-	public void addKey(JWK key);
+//	public void addKey(JWK key);
 	
-	public void removeKey(JWK key);
+//	public void removeKey(JWK key);
 }

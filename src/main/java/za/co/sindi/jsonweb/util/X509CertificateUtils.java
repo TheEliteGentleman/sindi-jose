@@ -3,11 +3,15 @@
  */
 package za.co.sindi.jsonweb.util;
 
+import java.io.ByteArrayInputStream;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateEncodingException;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
 import za.co.sindi.codec.Base64Codec;
+import za.co.sindi.codec.exception.DecodingException;
 import za.co.sindi.codec.exception.EncodingException;
 
 /**
@@ -27,6 +31,11 @@ public final class X509CertificateUtils {
 		return new String(BASE64_CODEC.encode(certificate.getEncoded()));
 	}
 	
+	public static X509Certificate base64Decode(final byte[] encodedBytes) throws CertificateException, DecodingException {
+		CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+		return (X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(BASE64_CODEC.decode(encodedBytes)));
+	}
+	
 	public static byte[] getSHA1Thumbprint(X509Certificate certificate) throws CertificateEncodingException, NoSuchAlgorithmException {
 		return DigestUtils.sha1Digest(certificate.getEncoded());
 	}
@@ -35,11 +44,11 @@ public final class X509CertificateUtils {
 		return DigestUtils.sha256Digest(certificate.getEncoded());
 	}
 	
-	public static String getBase64SHA1Thumbprint(X509Certificate certificate) throws CertificateEncodingException, NoSuchAlgorithmException, EncodingException {
-		return new String(BASE64_CODEC.encode(getSHA1Thumbprint(certificate)));
+	public static String getBase64URLSHA1Thumbprint(X509Certificate certificate) throws CertificateEncodingException, NoSuchAlgorithmException, EncodingException {
+		return new String(Base64URLUtils.base64UrlEncode(getSHA1Thumbprint(certificate)));
 	}
 	
-	public static String getBase64SHA256Thumbprint(X509Certificate certificate) throws CertificateEncodingException, NoSuchAlgorithmException, EncodingException {
-		return new String(BASE64_CODEC.encode(getSHA256Thumbprint(certificate)));
+	public static String getBase64URLSHA256Thumbprint(X509Certificate certificate) throws CertificateEncodingException, NoSuchAlgorithmException, EncodingException {
+		return new String(Base64URLUtils.base64UrlEncode(getSHA256Thumbprint(certificate)));
 	}
 }

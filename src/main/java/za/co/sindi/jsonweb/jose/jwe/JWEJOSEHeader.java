@@ -15,5 +15,5 @@ public interface JWEJOSEHeader extends JOSEHeader<JWEAlgorithm> {
 	public EncryptionAlgorithm getEncryptionAlgorithm();
 	
 	public CompressionAlgorithm getCompressionAlgorithm();
-	public void setCompressionAlgorithm(CompressionAlgorithm compressionAlgorithm);
+//	public void setCompressionAlgorithm(CompressionAlgorithm compressionAlgorithm);
 }

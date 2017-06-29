@@ -8,13 +8,14 @@ import java.math.BigInteger;
 import za.co.sindi.codec.exception.DecodingException;
 import za.co.sindi.codec.exception.EncodingException;
 import za.co.sindi.common.utils.Strings;
+import za.co.sindi.jsonweb.util.Base64URLUtils;
 
 /**
  * @author Bienfait Sindi
  * @since 08 April 2016
  *
  */
-public class Base64URLUInt extends Base64URL<BigInteger> {
+public class Base64URLUInt implements Base64URL<BigInteger> {
 
 	private BigInteger value;
 	private String jsonValue;
@@ -27,7 +28,7 @@ public class Base64URLUInt extends Base64URL<BigInteger> {
 		super();
 		this.value = value;
 		if (value != null) {
-			jsonValue = new String(getBase64urlCodec().encode(value.toByteArray()));
+			jsonValue = new String(Base64URLUtils.base64UrlEncode(value.toByteArray()));
 		}
 	}
 
@@ -39,7 +40,7 @@ public class Base64URLUInt extends Base64URL<BigInteger> {
 		super();
 		this.jsonValue = jsonValue;
 		if (!Strings.isNullOrEmpty(jsonValue)) {
-			this.value = new BigInteger(1, getBase64urlCodec().decode(jsonValue.getBytes()));
+			this.value = new BigInteger(1, Base64URLUtils.base64UrlDecode(jsonValue.getBytes()));
 		}
 	}
 
@@ -59,12 +60,12 @@ public class Base64URLUInt extends Base64URL<BigInteger> {
 		return jsonValue;
 	}
 	
-	public static void main(String[] args) {
-		try {
-			System.out.println(new Base64URLUInt(BigInteger.ONE).getJSONValue());
-		} catch (EncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args) {
+//		try {
+//			System.out.println(new Base64URLUInt(BigInteger.ONE).getJSONValue());
+//		} catch (EncodingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 }

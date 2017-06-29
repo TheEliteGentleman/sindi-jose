@@ -5,16 +5,11 @@ package za.co.sindi.jsonweb.jose.jwk.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
-import za.co.sindi.common.utils.PreConditions;
 import za.co.sindi.jsonweb.AbstractJWObject;
-import za.co.sindi.jsonweb.jose.jwk.Constants;
+import za.co.sindi.jsonweb.jose.jwk.JWKConstants;
 import za.co.sindi.jsonweb.jose.jwk.JWK;
 import za.co.sindi.jsonweb.jose.jwk.JWKSet;
-import za.co.sindi.jsonweb.jose.jwk.JWKeys;
-import za.co.sindi.jsonweb.jose.jwk.KeyType;
-import za.co.sindi.jsonweb.json.JSONArray;
 import za.co.sindi.jsonweb.json.JSONArrayBuilder;
 import za.co.sindi.jsonweb.json.JSONObject;
 import za.co.sindi.jsonweb.json.JSONObjectBuilder;
@@ -48,7 +43,6 @@ public class JWKKeySet extends AbstractJWObject implements JWKSet {
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.jose.jwk.JWKSet#addKey(za.co.sindi.jsonweb.jose.jwk.JWK)
 	 */
-	@Override
 	public void addKey(JWK key) {
 		// TODO Auto-generated method stub
 		if (key != null) {
@@ -65,74 +59,74 @@ public class JWKKeySet extends AbstractJWObject implements JWKSet {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwk.JWKSet#removeKey(za.co.sindi.jsonweb.jose.jwk.JWK)
-	 */
-	@Override
-	public void removeKey(JWK key) {
-		// TODO Auto-generated method stub
-//		if (key == null) {
-//			setParameter(Constants.JWK_KEYS, null);
-//		} else {
-//			if (!containsParameter(Constants.JWK_KEYS)) {
-//				setParameter(Constants.JWK_KEYS, new ArrayList<JWK>());
-//			}
-//			
-//			@SuppressWarnings("unchecked")
-//			Iterator<JWK> keyIterator = ((Collection<JWK>) getParameter(Constants.JWK_KEYS)).iterator();
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.jose.jwk.JWKSet#removeKey(za.co.sindi.jsonweb.jose.jwk.JWK)
+//	 */
+//	@Override
+//	public void removeKey(JWK key) {
+//		// TODO Auto-generated method stub
+////		if (key == null) {
+////			setParameter(Constants.JWK_KEYS, null);
+////		} else {
+////			if (!containsParameter(Constants.JWK_KEYS)) {
+////				setParameter(Constants.JWK_KEYS, new ArrayList<JWK>());
+////			}
+////			
+////			@SuppressWarnings("unchecked")
+////			Iterator<JWK> keyIterator = ((Collection<JWK>) getParameter(Constants.JWK_KEYS)).iterator();
+////			while (keyIterator.hasNext()) {
+////				if (keyIterator.next().getKeyId().equals(key.getKeyId())) {
+////					keyIterator.remove();
+////				}
+////			}
+////		}
+//		
+//		if (key != null && keys != null) {
+//			Iterator<JWK> keyIterator = keys.iterator();
 //			while (keyIterator.hasNext()) {
 //				if (keyIterator.next().getKeyId().equals(key.getKeyId())) {
 //					keyIterator.remove();
 //				}
 //			}
 //		}
-		
-		if (key != null && keys != null) {
-			Iterator<JWK> keyIterator = keys.iterator();
-			while (keyIterator.hasNext()) {
-				if (keyIterator.next().getKeyId().equals(key.getKeyId())) {
-					keyIterator.remove();
-				}
-			}
-		}
-	}
+//	}
 
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.JWObject#read(za.co.sindi.jsonweb.json.JSONObject)
-	 */
-	@Override
-	public void read(JSONObject jsonObject) throws Exception {
-		// TODO Auto-generated method stub
-		PreConditions.checkArgument(jsonObject != null, "No JSON object was provided.");
-		PreConditions.checkState(!jsonObject.isNull(Constants.JWK_KEYS), "No JWK Key Set parameter '" + Constants.JWK_KEYS + "' found.");
-		
-		JSONArray jsonArray = jsonObject.getJSONArray(Constants.JWK_KEYS);
-		if (!jsonArray.isEmpty()) {
-			for (int i = 0; i < jsonArray.size(); i++) {
-				JSONObject keyJSONObject = jsonArray.getJSONObject(i);
-				if (!keyJSONObject.isNull(Constants.JWK_KEY_TYPE)) {
-					KeyType keyType = KeyType.of(keyJSONObject.getString(Constants.JWK_KEY_TYPE));
-//					if (KeyType.EC.equals(keyType)) {
-//						JWK jwk = new JWKEllipticCurveKey();
-//						jwk.read(keyJSONObject);
-//						addKey(jwk);
-//					} else if (KeyType.OCT.equals(keyType)) {
-//						JWK jwk = new JWKSymmetricKey();
-//						jwk.read(keyJSONObject);
-//						addKey(jwk);
-//					} else if (KeyType.RSA.equals(keyType)) {
-//						JWK jwk = new JWKRSAKey();
-//						jwk.read(keyJSONObject);
-//						addKey(jwk);
-//					}
-					JWK jwk = JWKeys.getJWK(keyType);
-					PreConditions.checkState(jwk != null, "The key type '"+ keyType.getParameterValue() + "' is invalid.");
-					jwk.read(keyJSONObject);
-					addKey(jwk);
-				}
-			}
-		}
-	}
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.JWObject#read(za.co.sindi.jsonweb.json.JSONObject)
+//	 */
+//	@Override
+//	public void read(JSONObject jsonObject) throws Exception {
+//		// TODO Auto-generated method stub
+//		PreConditions.checkArgument(jsonObject != null, "No JSON object was provided.");
+//		PreConditions.checkState(!jsonObject.isNull(Constants.JWK_KEYS), "No JWK Key Set parameter '" + Constants.JWK_KEYS + "' found.");
+//		
+//		JSONArray jsonArray = jsonObject.getJSONArray(Constants.JWK_KEYS);
+//		if (!jsonArray.isEmpty()) {
+//			for (int i = 0; i < jsonArray.size(); i++) {
+//				JSONObject keyJSONObject = jsonArray.getJSONObject(i);
+//				if (!keyJSONObject.isNull(Constants.JWK_KEY_TYPE)) {
+//					KeyType keyType = KeyType.of(keyJSONObject.getString(Constants.JWK_KEY_TYPE));
+////					if (KeyType.EC.equals(keyType)) {
+////						JWK jwk = new JWKEllipticCurveKey();
+////						jwk.read(keyJSONObject);
+////						addKey(jwk);
+////					} else if (KeyType.OCT.equals(keyType)) {
+////						JWK jwk = new JWKSymmetricKey();
+////						jwk.read(keyJSONObject);
+////						addKey(jwk);
+////					} else if (KeyType.RSA.equals(keyType)) {
+////						JWK jwk = new JWKRSAKey();
+////						jwk.read(keyJSONObject);
+////						addKey(jwk);
+////					}
+//					JWK jwk = JWKeys.getJWK(keyType);
+//					PreConditions.checkState(jwk != null, "The key type '"+ keyType.getParameterValue() + "' is invalid.");
+//					jwk.read(keyJSONObject);
+//					addKey(jwk);
+//				}
+//			}
+//		}
+//	}
 
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.JWObject#toJSONObject()
@@ -147,7 +141,7 @@ public class JWKKeySet extends AbstractJWObject implements JWKSet {
 			for (JWK key : keys) {
 				jsonArrayBuilder.add(key.toJSONObject());
 			}
-			jsonObjectBuilder.add(Constants.JWK_KEYS, jsonArrayBuilder);
+			jsonObjectBuilder.add(JWKConstants.JWK_KEYS, jsonArrayBuilder);
 		}
 		return jsonObjectBuilder.build();
 	}

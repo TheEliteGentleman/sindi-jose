@@ -22,6 +22,15 @@ public class DefaultJSONObjectBuilder implements JSONObjectBuilder {
 
 	private net.sf.json.JSONObject jsonObject;
 	
+	/**
+	 * 
+	 */
+	public DefaultJSONObjectBuilder() {
+		super();
+		// TODO Auto-generated constructor stub
+		jsonObject = new net.sf.json.JSONObject();
+	}
+
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.json.JSONObjectBuilder#add(java.lang.String, java.lang.Object)
 	 */

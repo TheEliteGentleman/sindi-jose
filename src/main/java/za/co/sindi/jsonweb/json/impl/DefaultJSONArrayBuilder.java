@@ -21,6 +21,15 @@ public class DefaultJSONArrayBuilder implements JSONArrayBuilder {
 
 	private net.sf.json.JSONArray jsonArray;
 	
+	/**
+	 * 
+	 */
+	public DefaultJSONArrayBuilder() {
+		super();
+		// TODO Auto-generated constructor stub
+		jsonArray = new net.sf.json.JSONArray();
+	}
+
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.json.JSONArrayBuilder#add(java.lang.Object)
 	 */

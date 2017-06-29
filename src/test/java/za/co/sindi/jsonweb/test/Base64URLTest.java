@@ -3,12 +3,11 @@
  */
 package za.co.sindi.jsonweb.test;
 
-import java.nio.charset.StandardCharsets;
-
 import net.sf.json.JSONObject;
+import za.co.sindi.codec.Strings;
 import za.co.sindi.codec.exception.DecodingException;
 import za.co.sindi.codec.exception.EncodingException;
-import za.co.sindi.jsonweb.util.Base64URLCodec;
+import za.co.sindi.jsonweb.util.Base64URLUtils;
 
 /**
  * @author Bienfait Sindi
@@ -23,10 +22,13 @@ public class Base64URLTest {
 		json.put("alg", "HS256");
 		String value = json.toString();
 		
-		Base64URLCodec codec = new Base64URLCodec();
+//		Base64URLCodec codec = new Base64URLCodec();
 		try {
-			System.out.println(new String(codec.encode(value.getBytes(StandardCharsets.UTF_8))));
-			System.out.println(new String(codec.decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9".getBytes()), StandardCharsets.UTF_8));
+//			System.out.println(new String(Base64URLUtils.encode(value.getBytes(StandardCharsets.UTF_8))));
+//			System.out.println(new String(Base64URLUtils.decode("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9".getBytes()), StandardCharsets.UTF_8));
+			
+			System.out.println(Strings.asUTF8String(Base64URLUtils.base64UrlEncode(Strings.toUTF8Bytes(value))));
+			System.out.println(Strings.asUTF8String(Base64URLUtils.base64UrlDecode(Strings.toUTF8Bytes("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"))));
 		} catch (EncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

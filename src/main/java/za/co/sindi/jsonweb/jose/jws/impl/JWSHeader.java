@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import za.co.sindi.jsonweb.jose.BaseJOSEHeader;
+import za.co.sindi.jsonweb.jose.AbstractJOSEHeader;
 import za.co.sindi.jsonweb.jose.Constants;
 import za.co.sindi.jsonweb.jose.JOSEHeader;
 import za.co.sindi.jsonweb.jose.jws.JWSAlgorithm;
@@ -18,7 +18,7 @@ import za.co.sindi.jsonweb.jose.jws.JWSJOSEHeader;
  * @since 12 May 2016
  *
  */
-public class JWSHeader extends BaseJOSEHeader<JWSAlgorithm> implements JWSJOSEHeader, JOSEHeader<JWSAlgorithm> {
+public class JWSHeader extends AbstractJOSEHeader<JWSAlgorithm> implements JWSJOSEHeader, JOSEHeader<JWSAlgorithm> {
 
 	private static final Set<String> REGISTERED_HEADER_NAMES;
 	

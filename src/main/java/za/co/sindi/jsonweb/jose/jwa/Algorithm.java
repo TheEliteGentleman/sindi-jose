@@ -3,6 +3,8 @@
  */
 package za.co.sindi.jsonweb.jose.jwa;
 
+import java.io.Serializable;
+
 import za.co.sindi.jsonweb.Requirement;
 
 /**
@@ -12,7 +14,12 @@ import za.co.sindi.jsonweb.Requirement;
  * @since 22 March 2016
  *
  */
-public abstract class Algorithm {
+public abstract class Algorithm implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3642016859529803433L;
 	
 	private final String jwaAlgorithmName;
 	private final String jcaAlgorithmName;
@@ -25,8 +32,7 @@ public abstract class Algorithm {
 	 * @param description
 	 * @param implementationRequirement
 	 */
-	protected Algorithm(final String jwaAlgorithmName, final String jcaAlgorithmName, final String description,
-			final Requirement implementationRequirement) {
+	protected Algorithm(final String jwaAlgorithmName, final String jcaAlgorithmName, final String description, final Requirement implementationRequirement) {
 		this.jwaAlgorithmName = jwaAlgorithmName;
 		this.jcaAlgorithmName = jcaAlgorithmName;
 		this.description = description;

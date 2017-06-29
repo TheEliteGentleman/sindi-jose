@@ -10,5 +10,5 @@ package za.co.sindi.jsonweb.jose.jws;
  */
 public interface JWSPayload {
 
-	public byte[] getMessage();
+	public byte[] getEncoded();
 }

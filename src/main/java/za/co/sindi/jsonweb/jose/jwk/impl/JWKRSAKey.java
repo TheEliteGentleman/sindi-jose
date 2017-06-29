@@ -16,12 +16,11 @@ import java.util.List;
 import za.co.sindi.common.utils.PreConditions;
 import za.co.sindi.jsonweb.Base64URLUInt;
 import za.co.sindi.jsonweb.jose.jwk.AbstractRSAJWK;
-import za.co.sindi.jsonweb.jose.jwk.Constants;
+import za.co.sindi.jsonweb.jose.jwk.JWKConstants;
 import za.co.sindi.jsonweb.jose.jwk.PrivateJWK;
 import za.co.sindi.jsonweb.jose.jwk.PublicJWK;
 import za.co.sindi.jsonweb.jose.jwk.RSAPrivateJWK;
 import za.co.sindi.jsonweb.jose.jwk.RSAPublicJWK;
-import za.co.sindi.jsonweb.json.JSONObject;
 import za.co.sindi.jsonweb.json.JSONObjectBuilder;
 
 /**
@@ -47,46 +46,46 @@ public class JWKRSAKey extends AbstractRSAJWK implements RSAPublicJWK, RSAPrivat
 		// TODO Auto-generated constructor stub
 	}
 	
-	/**
-	 * 
-	 */
-	public JWKRSAKey(Base64URLUInt modulus, Base64URLUInt publicExponent) {
-		this(modulus, publicExponent, null, null, null, null, null, null);
-		// TODO Auto-generated constructor stub
-	}
-	
-	/**
-	 * @param modulus
-	 * @param publicExponent
-	 * @param privateExponent
-	 * @param primeP
-	 * @param primeQ
-	 * @param primeExponentP
-	 * @param primeExponentQ
-	 * @param crtCoefficient
-	 */
-	public JWKRSAKey(Base64URLUInt modulus, Base64URLUInt publicExponent, Base64URLUInt privateExponent, Base64URLUInt primeP, Base64URLUInt primeQ, Base64URLUInt primeExponentP, Base64URLUInt primeExponentQ, Base64URLUInt crtCoefficient) {
-		super();
-		// TODO Auto-generated constructor stub
-		PreConditions.checkArgument(modulus != null, "RSA modulus is required.");
-		PreConditions.checkArgument(publicExponent != null, "RSA public exponent is required.");
-		if (privateExponent != null) {
-			PreConditions.checkArgument(primeP != null, "RSA first prime factor is required.");
-			PreConditions.checkArgument(primeQ != null, "RSA second prime factor is required.");
-			PreConditions.checkArgument(primeExponentP != null, "RSA first prime exponent is required.");
-			PreConditions.checkArgument(primeExponentQ != null, "RSA second exponent is required.");
-			PreConditions.checkArgument(crtCoefficient != null, "RSA CRT coefficient is required.");
-		}
-		
-		setModulus(modulus);
-		setPublicExponent(publicExponent);
-		setPrivateExponent(privateExponent);
-		setFirstPrimeFactor(primeP);
-		setSecondPrimeFactor(primeP);
-		setFirstFactorCRTExponent(primeExponentP);
-		setSecondFactorCRTExponent(primeExponentQ);
-		setFirstCRTCoefficient(crtCoefficient);
-	}
+//	/**
+//	 * 
+//	 */
+//	public JWKRSAKey(Base64URLUInt modulus, Base64URLUInt publicExponent) {
+//		this(modulus, publicExponent, null, null, null, null, null, null);
+//		// TODO Auto-generated constructor stub
+//	}
+//	
+//	/**
+//	 * @param modulus
+//	 * @param publicExponent
+//	 * @param privateExponent
+//	 * @param primeP
+//	 * @param primeQ
+//	 * @param primeExponentP
+//	 * @param primeExponentQ
+//	 * @param crtCoefficient
+//	 */
+//	public JWKRSAKey(Base64URLUInt modulus, Base64URLUInt publicExponent, Base64URLUInt privateExponent, Base64URLUInt primeP, Base64URLUInt primeQ, Base64URLUInt primeExponentP, Base64URLUInt primeExponentQ, Base64URLUInt crtCoefficient) {
+//		super();
+//		// TODO Auto-generated constructor stub
+//		PreConditions.checkArgument(modulus != null, "RSA modulus is required.");
+//		PreConditions.checkArgument(publicExponent != null, "RSA public exponent is required.");
+//		if (privateExponent != null) {
+//			PreConditions.checkArgument(primeP != null, "RSA first prime factor is required.");
+//			PreConditions.checkArgument(primeQ != null, "RSA second prime factor is required.");
+//			PreConditions.checkArgument(primeExponentP != null, "RSA first prime exponent is required.");
+//			PreConditions.checkArgument(primeExponentQ != null, "RSA second exponent is required.");
+//			PreConditions.checkArgument(crtCoefficient != null, "RSA CRT coefficient is required.");
+//		}
+//		
+//		setModulus(modulus);
+//		setPublicExponent(publicExponent);
+//		setPrivateExponent(privateExponent);
+//		setFirstPrimeFactor(primeP);
+//		setSecondPrimeFactor(primeP);
+//		setFirstFactorCRTExponent(primeExponentP);
+//		setSecondFactorCRTExponent(primeExponentQ);
+//		setFirstCRTCoefficient(crtCoefficient);
+//	}
 
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.jose.jwk.PrivateJWK#toJCAPrivateKey()
@@ -139,7 +138,7 @@ public class JWKRSAKey extends AbstractRSAJWK implements RSAPublicJWK, RSAPrivat
 		return privateExponent;
 	}
 	
-	private void setPrivateExponent(Base64URLUInt privateExponent) {
+	public void setPrivateExponent(Base64URLUInt privateExponent) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.RSA_PARAM_EXPONENT_PRIVATE, privateExponent);
 		this.privateExponent = privateExponent;
@@ -155,7 +154,7 @@ public class JWKRSAKey extends AbstractRSAJWK implements RSAPublicJWK, RSAPrivat
 		return firstPrimeFactor;
 	}
 	
-	private void setFirstPrimeFactor(Base64URLUInt firstPrimeFactor) {
+	public void setFirstPrimeFactor(Base64URLUInt firstPrimeFactor) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.RSA_PARAM_FIRST_PRIME_FACTOR, firstPrimeFactor);
 		this.firstPrimeFactor = firstPrimeFactor;
@@ -171,7 +170,7 @@ public class JWKRSAKey extends AbstractRSAJWK implements RSAPublicJWK, RSAPrivat
 		return secondPrimeFactor;
 	}
 	
-	private void setSecondPrimeFactor(Base64URLUInt secondPrimeFactor) {
+	public void setSecondPrimeFactor(Base64URLUInt secondPrimeFactor) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.RSA_PARAM_SECOND_PRIME_FACTOR, secondPrimeFactor);
 		this.secondPrimeFactor = secondPrimeFactor;
@@ -187,7 +186,7 @@ public class JWKRSAKey extends AbstractRSAJWK implements RSAPublicJWK, RSAPrivat
 		return firstFactorCRTExponent;
 	}
 	
-	private void setFirstFactorCRTExponent(Base64URLUInt firstFactorCRTExponent) {
+	public void setFirstFactorCRTExponent(Base64URLUInt firstFactorCRTExponent) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT, firstFactorCRTExponent);
 		this.firstFactorCRTExponent = firstFactorCRTExponent;
@@ -203,7 +202,7 @@ public class JWKRSAKey extends AbstractRSAJWK implements RSAPublicJWK, RSAPrivat
 		return secondFactorCRTExponent;
 	}
 	
-	private void setSecondFactorCRTExponent(Base64URLUInt secondFactorCRTExponent) {
+	public void setSecondFactorCRTExponent(Base64URLUInt secondFactorCRTExponent) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.RSA_PARAM_SECOND_FACTOR_CRT_EXPONENT, secondFactorCRTExponent);
 		this.secondFactorCRTExponent = secondFactorCRTExponent;
@@ -219,7 +218,7 @@ public class JWKRSAKey extends AbstractRSAJWK implements RSAPublicJWK, RSAPrivat
 		return firstCRTCoefficient;
 	}
 	
-	private void setFirstCRTCoefficient(Base64URLUInt firstCRTCoefficient) {
+	public void setFirstCRTCoefficient(Base64URLUInt firstCRTCoefficient) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.RSA_PARAM_FIRST_CRT_COEFFICIENT, firstCRTCoefficient);
 		this.firstCRTCoefficient = firstCRTCoefficient;
@@ -239,7 +238,7 @@ public class JWKRSAKey extends AbstractRSAJWK implements RSAPublicJWK, RSAPrivat
 		return null;
 	}
 	
-	private void setOtherPrimes(OtherPrimesInfo[] otherPrimes) {
+	public void setOtherPrimes(OtherPrimesInfo[] otherPrimes) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.RSA_PARAM_OTH, otherPrimes);
 		if (otherPrimes != null) {
@@ -250,32 +249,32 @@ public class JWKRSAKey extends AbstractRSAJWK implements RSAPublicJWK, RSAPrivat
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractRSAJWK#read(za.co.sindi.jsonweb.json.JSONObject)
-	 */
-	@Override
-	public void read(JSONObject jsonObject) throws Exception {
-		// TODO Auto-generated method stub
-		super.read(jsonObject);
-		if (!jsonObject.isNull(Constants.RSA_PARAM_EXPONENT_PRIVATE)) {
-			setPrivateExponent(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_EXPONENT_PRIVATE)));
-			
-			PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_FIRST_PRIME_FACTOR), "JWK RSA key requires the '" + Constants.RSA_PARAM_FIRST_PRIME_FACTOR + "' parameter.");
-			setFirstPrimeFactor(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_FIRST_PRIME_FACTOR)));
-			
-			PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_SECOND_PRIME_FACTOR), "JWK RSA key requires the '" + Constants.RSA_PARAM_SECOND_PRIME_FACTOR + "' parameter.");
-			setSecondPrimeFactor(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_SECOND_PRIME_FACTOR)));
-			
-			PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT), "JWK RSA key requires the '" + Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT + "' parameter.");
-			setFirstFactorCRTExponent(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT)));
-			
-			PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_SECOND_FACTOR_CRT_EXPONENT), "JWK RSA key requires the '" + Constants.RSA_PARAM_SECOND_FACTOR_CRT_EXPONENT + "' parameter.");
-			setSecondFactorCRTExponent(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_SECOND_FACTOR_CRT_EXPONENT)));
-			
-			PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT), "JWK RSA key requires the '" + Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT + "' parameter.");
-			setFirstCRTCoefficient(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT)));
-		}
-	}
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractRSAJWK#read(za.co.sindi.jsonweb.json.JSONObject)
+//	 */
+//	@Override
+//	public void read(JSONObject jsonObject) throws Exception {
+//		// TODO Auto-generated method stub
+//		super.read(jsonObject);
+//		if (!jsonObject.isNull(Constants.RSA_PARAM_EXPONENT_PRIVATE)) {
+//			setPrivateExponent(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_EXPONENT_PRIVATE)));
+//			
+//			PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_FIRST_PRIME_FACTOR), "JWK RSA key requires the '" + Constants.RSA_PARAM_FIRST_PRIME_FACTOR + "' parameter.");
+//			setFirstPrimeFactor(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_FIRST_PRIME_FACTOR)));
+//			
+//			PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_SECOND_PRIME_FACTOR), "JWK RSA key requires the '" + Constants.RSA_PARAM_SECOND_PRIME_FACTOR + "' parameter.");
+//			setSecondPrimeFactor(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_SECOND_PRIME_FACTOR)));
+//			
+//			PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT), "JWK RSA key requires the '" + Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT + "' parameter.");
+//			setFirstFactorCRTExponent(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT)));
+//			
+//			PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_SECOND_FACTOR_CRT_EXPONENT), "JWK RSA key requires the '" + Constants.RSA_PARAM_SECOND_FACTOR_CRT_EXPONENT + "' parameter.");
+//			setSecondFactorCRTExponent(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_SECOND_FACTOR_CRT_EXPONENT)));
+//			
+//			PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT), "JWK RSA key requires the '" + Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT + "' parameter.");
+//			setFirstCRTCoefficient(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT)));
+//		}
+//	}
 
 //	/* (non-Javadoc)
 //	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractRSAJWK#readFullyInternally(za.co.sindi.jsonweb.json.JSONObject)
@@ -311,12 +310,12 @@ public class JWKRSAKey extends AbstractRSAJWK implements RSAPublicJWK, RSAPrivat
 		// TODO Auto-generated method stub
 		super.populateJSONObject(jsonObjectBuilder);
 		if (privateExponent != null) {
-			jsonObjectBuilder.add(Constants.RSA_PARAM_EXPONENT_PRIVATE, getPrivateExponent().getJSONValue());
-			jsonObjectBuilder.add(Constants.RSA_PARAM_FIRST_PRIME_FACTOR, getFirstPrimeFactor().getJSONValue());
-			jsonObjectBuilder.add(Constants.RSA_PARAM_SECOND_PRIME_FACTOR, getSecondPrimeFactor().getJSONValue());
-			jsonObjectBuilder.add(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT, getFirstFactorCRTExponent().getJSONValue());
-			jsonObjectBuilder.add(Constants.RSA_PARAM_SECOND_FACTOR_CRT_EXPONENT, getSecondFactorCRTExponent().getJSONValue());
-			jsonObjectBuilder.add(Constants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT, getFirstCRTCoefficient().getJSONValue());
+			jsonObjectBuilder.add(JWKConstants.RSA_PARAM_EXPONENT_PRIVATE, getPrivateExponent().getJSONValue());
+			jsonObjectBuilder.add(JWKConstants.RSA_PARAM_FIRST_PRIME_FACTOR, getFirstPrimeFactor().getJSONValue());
+			jsonObjectBuilder.add(JWKConstants.RSA_PARAM_SECOND_PRIME_FACTOR, getSecondPrimeFactor().getJSONValue());
+			jsonObjectBuilder.add(JWKConstants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT, getFirstFactorCRTExponent().getJSONValue());
+			jsonObjectBuilder.add(JWKConstants.RSA_PARAM_SECOND_FACTOR_CRT_EXPONENT, getSecondFactorCRTExponent().getJSONValue());
+			jsonObjectBuilder.add(JWKConstants.RSA_PARAM_FIRST_FACTOR_CRT_EXPONENT, getFirstCRTCoefficient().getJSONValue());
 		}
 	}
 

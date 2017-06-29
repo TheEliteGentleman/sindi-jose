@@ -6,13 +6,14 @@ package za.co.sindi.jsonweb;
 import za.co.sindi.codec.exception.DecodingException;
 import za.co.sindi.codec.exception.EncodingException;
 import za.co.sindi.common.utils.Strings;
+import za.co.sindi.jsonweb.util.Base64URLUtils;
 
 /**
  * @author Bienfait Sindi
  * @since 08 April 2016
  *
  */
-public class Base64URLBytes extends Base64URL<byte[]> {
+public class Base64URLBytes implements Base64URL<byte[]> {
 
 	private byte[] value;
 	private String jsonValue;
@@ -25,7 +26,7 @@ public class Base64URLBytes extends Base64URL<byte[]> {
 		super();
 		this.value = value;
 		if (value != null) {
-			jsonValue = new String(getBase64urlCodec().encode(value));
+			jsonValue = new String(Base64URLUtils.base64UrlEncode(value));
 		}
 	}
 
@@ -37,7 +38,7 @@ public class Base64URLBytes extends Base64URL<byte[]> {
 		super();
 		this.jsonValue = jsonValue;
 		if (!Strings.isNullOrEmpty(jsonValue)) {
-			this.value = getBase64urlCodec().decode(jsonValue.getBytes());
+			this.value = Base64URLUtils.base64UrlDecode(jsonValue.getBytes());
 		}
 	}
 

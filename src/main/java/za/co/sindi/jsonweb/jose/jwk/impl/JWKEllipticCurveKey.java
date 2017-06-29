@@ -16,7 +16,7 @@ import java.security.spec.ECPublicKeySpec;
 import za.co.sindi.common.utils.PreConditions;
 import za.co.sindi.jsonweb.Base64URLUInt;
 import za.co.sindi.jsonweb.jose.jwk.AbstractEllipticCurveJWK;
-import za.co.sindi.jsonweb.jose.jwk.Constants;
+import za.co.sindi.jsonweb.jose.jwk.JWKConstants;
 import za.co.sindi.jsonweb.jose.jwk.ECCurve;
 import za.co.sindi.jsonweb.jose.jwk.EllipticCurveJWK;
 import za.co.sindi.jsonweb.jose.jwk.EllipticCurvePrivateJWK;
@@ -25,7 +25,6 @@ import za.co.sindi.jsonweb.jose.jwk.JCAECGenParameterSpecs;
 import za.co.sindi.jsonweb.jose.jwk.JWK;
 import za.co.sindi.jsonweb.jose.jwk.PrivateJWK;
 import za.co.sindi.jsonweb.jose.jwk.PublicJWK;
-import za.co.sindi.jsonweb.json.JSONObject;
 import za.co.sindi.jsonweb.json.JSONObjectBuilder;
 
 /**
@@ -46,34 +45,34 @@ public class JWKEllipticCurveKey extends AbstractEllipticCurveJWK implements Ell
 		// TODO Auto-generated constructor stub
 	}
 	
-	/**
-	 * @param curve - Elliptic Curves
-	 * @param x - x coordinate
-	 * @param y - y coordinate
-	 * @see ECCurve
-	 */
-	public JWKEllipticCurveKey(ECCurve curve, Base64URLUInt x, Base64URLUInt y) {
-		this(curve, x, y, null);
-		// TODO Auto-generated constructor stub
-	}
-	
-	/** 
-	 * @param x - x coordinate
-	 * @param y - y coordinate
-	 * @param d - private key
-	 */
-	public JWKEllipticCurveKey(ECCurve curve, Base64URLUInt x, Base64URLUInt y, Base64URLUInt d) {
-		super();
-		// TODO Auto-generated constructor stub
-		PreConditions.checkArgument(curve != null, "Elliptic Curve ECCurve is required.");
-		PreConditions.checkArgument(x != null, "Elliptic Curve X coordinate is required.");
-		PreConditions.checkArgument(y != null, "Elliptic Curve Y coordinate is required.");
-		
-		setCurve(curve);
-		setCoordinateX(x);
-		setCoordinateY(y);
-		setPrivateKey(d);
-	}
+//	/**
+//	 * @param curve - Elliptic Curves
+//	 * @param x - x coordinate
+//	 * @param y - y coordinate
+//	 * @see ECCurve
+//	 */
+//	public JWKEllipticCurveKey(ECCurve curve, Base64URLUInt x, Base64URLUInt y) {
+//		this(curve, x, y, null);
+//		// TODO Auto-generated constructor stub
+//	}
+//	
+//	/** 
+//	 * @param x - x coordinate
+//	 * @param y - y coordinate
+//	 * @param d - private key
+//	 */
+//	public JWKEllipticCurveKey(ECCurve curve, Base64URLUInt x, Base64URLUInt y, Base64URLUInt d) {
+//		super();
+//		// TODO Auto-generated constructor stub
+//		PreConditions.checkArgument(curve != null, "Elliptic Curve ECCurve is required.");
+//		PreConditions.checkArgument(x != null, "Elliptic Curve X coordinate is required.");
+//		PreConditions.checkArgument(y != null, "Elliptic Curve Y coordinate is required.");
+//		
+//		setCurve(curve);
+//		setCoordinateX(x);
+//		setCoordinateY(y);
+//		setPrivateKey(d);
+//	}
 
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.jose.jwk.EllipticCurvePublicJWK#getCoordinateY()
@@ -85,7 +84,7 @@ public class JWKEllipticCurveKey extends AbstractEllipticCurveJWK implements Ell
 		return coordinateY;
 	}
 	
-	private void setCoordinateY(Base64URLUInt coordinateY) {
+	public void setCoordinateY(Base64URLUInt coordinateY) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.EC_PARAM_Y_COORDINATE, coordinateY);
 		this.coordinateY = coordinateY;
@@ -101,7 +100,7 @@ public class JWKEllipticCurveKey extends AbstractEllipticCurveJWK implements Ell
 		return privateKey;
 	}
 
-	private void setPrivateKey(Base64URLUInt privateKey) {
+	public void setPrivateKey(Base64URLUInt privateKey) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.EC_PARAM_ECC_PRIVATE_KEY, privateKey);
 		this.privateKey = privateKey;
@@ -147,22 +146,22 @@ public class JWKEllipticCurveKey extends AbstractEllipticCurveJWK implements Ell
 		return keyFactory.generatePrivate(privateKeySpec);
 	}
 
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractEllipticCurveJWK#read(za.co.sindi.jsonweb.json.JSONObject)
-	 */
-	@Override
-	public void read(JSONObject jsonObject) throws Exception {
-		// TODO Auto-generated method stub
-		super.read(jsonObject);
-		if (jsonObject.isNull(Constants.EC_PARAM_Y_COORDINATE)) {
-			throw new IllegalStateException("EC JWK parameter '" + Constants.EC_PARAM_Y_COORDINATE + "' is null or doesn't exist.");
-		}
-		
-		setCoordinateY(new Base64URLUInt(jsonObject.getString(Constants.EC_PARAM_Y_COORDINATE)));
-		if (!jsonObject.isNull(Constants.EC_PARAM_ECC_PRIVATE_KEY)) {
-			setPrivateKey(new Base64URLUInt(jsonObject.getString(Constants.EC_PARAM_ECC_PRIVATE_KEY)));
-		}
-	}
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractEllipticCurveJWK#read(za.co.sindi.jsonweb.json.JSONObject)
+//	 */
+//	@Override
+//	public void read(JSONObject jsonObject) throws Exception {
+//		// TODO Auto-generated method stub
+//		super.read(jsonObject);
+//		if (jsonObject.isNull(Constants.EC_PARAM_Y_COORDINATE)) {
+//			throw new IllegalStateException("EC JWK parameter '" + Constants.EC_PARAM_Y_COORDINATE + "' is null or doesn't exist.");
+//		}
+//		
+//		setCoordinateY(new Base64URLUInt(jsonObject.getString(Constants.EC_PARAM_Y_COORDINATE)));
+//		if (!jsonObject.isNull(Constants.EC_PARAM_ECC_PRIVATE_KEY)) {
+//			setPrivateKey(new Base64URLUInt(jsonObject.getString(Constants.EC_PARAM_ECC_PRIVATE_KEY)));
+//		}
+//	}
 
 //	/* (non-Javadoc)
 //	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractEllipticCurveJWK#readFullyInternally(za.co.sindi.jsonweb.json.JSONObject)
@@ -187,10 +186,10 @@ public class JWKEllipticCurveKey extends AbstractEllipticCurveJWK implements Ell
 	protected void populateJSONObject(JSONObjectBuilder jsonObjectBuilder) {
 		// TODO Auto-generated method stub
 		super.populateJSONObject(jsonObjectBuilder);
-		jsonObjectBuilder.add(Constants.EC_PARAM_Y_COORDINATE, getCoordinateY().getJSONValue());
+		jsonObjectBuilder.add(JWKConstants.EC_PARAM_Y_COORDINATE, getCoordinateY().getJSONValue());
 		Base64URLUInt privateKey = getPrivateKey();
 		if (privateKey != null) {
-			jsonObjectBuilder.add(Constants.EC_PARAM_ECC_PRIVATE_KEY, privateKey.getJSONValue());
+			jsonObjectBuilder.add(JWKConstants.EC_PARAM_ECC_PRIVATE_KEY, privateKey.getJSONValue());
 		}
 	}
 

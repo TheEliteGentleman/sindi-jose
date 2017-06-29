@@ -12,6 +12,6 @@ import za.co.sindi.jsonweb.json.JSONObject;
  */
 public interface JWObject {
 
-	public void read(JSONObject jsonObject) throws Exception;
+//	public void read(JSONObject jsonObject) throws Exception;
 	public JSONObject toJSONObject() throws Exception;
 }

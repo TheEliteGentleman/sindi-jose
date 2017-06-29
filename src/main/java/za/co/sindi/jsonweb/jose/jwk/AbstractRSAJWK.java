@@ -3,9 +3,7 @@
  */
 package za.co.sindi.jsonweb.jose.jwk;
 
-import za.co.sindi.common.utils.PreConditions;
 import za.co.sindi.jsonweb.Base64URLUInt;
-import za.co.sindi.jsonweb.json.JSONObject;
 import za.co.sindi.jsonweb.json.JSONObjectBuilder;
 
 /**
@@ -26,19 +24,19 @@ public abstract class AbstractRSAJWK extends AbstractJWK implements RSAJWK {
 		// TODO Auto-generated constructor stub
 	}
 
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractJWK#read(za.co.sindi.jsonweb.json.JSONObject)
-	 */
-	@Override
-	public void read(JSONObject jsonObject) throws Exception {
-		// TODO Auto-generated method stub
-		super.read(jsonObject);
-		PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_MODULUS), "No JWK RSA parameter '" + Constants.RSA_PARAM_MODULUS + "' found.");
-		PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_EXPONENT_PUBLIC), "No RSA Curve parameter '" + Constants.RSA_PARAM_EXPONENT_PUBLIC + "' found.");
-		
-		setModulus(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_MODULUS)));
-		setPublicExponent(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_EXPONENT_PUBLIC)));
-	}
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractJWK#read(za.co.sindi.jsonweb.json.JSONObject)
+//	 */
+//	@Override
+//	public void read(JSONObject jsonObject) throws Exception {
+//		// TODO Auto-generated method stub
+//		super.read(jsonObject);
+//		PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_MODULUS), "No JWK RSA parameter '" + Constants.RSA_PARAM_MODULUS + "' found.");
+//		PreConditions.checkState(!jsonObject.isNull(Constants.RSA_PARAM_EXPONENT_PUBLIC), "No RSA Curve parameter '" + Constants.RSA_PARAM_EXPONENT_PUBLIC + "' found.");
+//		
+//		setModulus(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_MODULUS)));
+//		setPublicExponent(new Base64URLUInt(jsonObject.getString(Constants.RSA_PARAM_EXPONENT_PUBLIC)));
+//	}
 
 //	/* (non-Javadoc)
 //	 * @see za.co.sindi.jsonweb.jose.jwk.AbstractJWK#readFully(za.co.sindi.jsonweb.json.JSONObject)
@@ -60,8 +58,8 @@ public abstract class AbstractRSAJWK extends AbstractJWK implements RSAJWK {
 	@Override
 	protected void populateJSONObject(JSONObjectBuilder jsonObjectBuilder) {
 		// TODO Auto-generated method stub
-		jsonObjectBuilder.add(Constants.RSA_PARAM_MODULUS, getModulus().getJSONValue());
-		jsonObjectBuilder.add(Constants.RSA_PARAM_EXPONENT_PUBLIC, getPublicExponent().getJSONValue());
+		jsonObjectBuilder.add(JWKConstants.RSA_PARAM_MODULUS, getModulus().getJSONValue());
+		jsonObjectBuilder.add(JWKConstants.RSA_PARAM_EXPONENT_PUBLIC, getPublicExponent().getJSONValue());
 //		populateJSONObjectInternally(jsonObjectBuilder);
 	}
 
@@ -74,7 +72,7 @@ public abstract class AbstractRSAJWK extends AbstractJWK implements RSAJWK {
 		return modulus;
 	}
 	
-	protected void setModulus(Base64URLUInt modulus) {
+	public void setModulus(Base64URLUInt modulus) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.RSA_PARAM_MODULUS, modulus);
 		this.modulus = modulus;
@@ -89,7 +87,7 @@ public abstract class AbstractRSAJWK extends AbstractJWK implements RSAJWK {
 		return publicExponent;
 	}
 	
-	protected void setPublicExponent(Base64URLUInt exponent) {
+	public void setPublicExponent(Base64URLUInt exponent) {
 		// TODO Auto-generated method stub
 //		setParameter(Constants.RSA_PARAM_EXPONENT_PUBLIC, exponent);
 		this.publicExponent = exponent;

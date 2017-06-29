@@ -29,14 +29,22 @@ public final class URLUtils {
 	}
 	
 	public static boolean exists(URL url) {
+		boolean followRedirects = HttpURLConnection.getFollowRedirects();
 		try {
-			HttpURLConnection.setFollowRedirects(false);
+			if (followRedirects) {
+				HttpURLConnection.setFollowRedirects(false);
+			}
 			HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 			httpURLConnection.setRequestMethod("HEAD");
 			return httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			return false;
+		} finally {
+			//Reset
+			if (followRedirects) {
+				HttpURLConnection.setFollowRedirects(true);
+			}
 		}
 	}
 }
