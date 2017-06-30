@@ -28,12 +28,27 @@ import za.co.sindi.jsonweb.util.Base64URLUtils;
 public abstract class JWSDeserialization {
 
 	protected JWSCryptographicAlgorithmFactory jwsCryptographicAlgorithmFactory = new DefaultJWSCryptographicAlgorithmFactory();
+	protected boolean payloadDetached;
 	
 	/**
 	 * @param jwsCryptographicAlgorithmFactory the jwsCryptographicAlgorithmFactory to set
 	 */
 	public void setJwsCryptographicAlgorithmFactory(JWSCryptographicAlgorithmFactory jwsCryptographicAlgorithmFactory) {
 		this.jwsCryptographicAlgorithmFactory = jwsCryptographicAlgorithmFactory;
+	}
+	
+	/**
+	 * @param payloadDetached the payloadDetached to set
+	 */
+	public void setPayloadDetached(boolean payloadDetached) {
+		this.payloadDetached = payloadDetached;
+	}
+
+	/**
+	 * @return the payloadDetached
+	 */
+	public boolean isPayloadDetached() {
+		return payloadDetached;
 	}
 	
 	protected byte[] base64UrlDecode(final String base64UrlEncodedString) throws DecodingException {

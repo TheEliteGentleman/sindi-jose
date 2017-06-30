@@ -34,21 +34,26 @@ public final class JWSUtils {
 //		return jwsPayloadDecoder.decode(base64UrlDecode(toASCIIBytes(encodedJwsPayloadString)));
 //	}
 	
-	private static byte[] encodeJwsJoseHeader(final JWSJOSEHeader jwsJOSEHeader) throws EncodingException {
+	public static byte[] encodeJwsJoseHeader(final JWSJOSEHeader jwsJOSEHeader) throws EncodingException {
 //		PreConditions.checkArgument(jwsJOSEHeader != null, "No JWS JOSE Header was specified.");
 		return base64UrlEncode(toUTF8Bytes(jwsJOSEHeader.toString()));
 	}
 	
-	private static byte[] encodeJwsPayload(final JWSPayload jwsPayload) throws EncodingException {
+	public static byte[] encodeJwsPayload(final JWSPayload jwsPayload) throws EncodingException {
 //		PreConditions.checkArgument(jwsPayload != null, "No JWS Payload was specified.");
 		return base64UrlEncode(jwsPayload.getEncoded());
 	}
 	
-	public static byte[] generateJwsSigningInput(final JWSJOSEHeader jwsJoseHeader, final JWSPayload jwsPayload) throws IOException, EncodingException {
+	public static byte[] generateJwsSigningInput(final JWSJOSEHeader jwsJoseHeader, final JWSPayload jwsPayload) throws EncodingException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		baos.write(encodeJwsJoseHeader(jwsJoseHeader));
-		baos.write(JWSConstants.JWS_APPEND_SEPARATOR);
-		baos.write(encodeJwsPayload(jwsPayload));
+		try {
+			baos.write(encodeJwsJoseHeader(jwsJoseHeader));
+			baos.write(JWSConstants.JWS_APPEND_SEPARATOR);
+			baos.write(encodeJwsPayload(jwsPayload));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
+		}
 		return baos.toByteArray();
 	}
 	

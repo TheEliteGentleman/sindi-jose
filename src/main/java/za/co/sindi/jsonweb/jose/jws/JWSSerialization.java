@@ -20,6 +20,7 @@ import za.co.sindi.jsonweb.jose.jws.impl.DefaultJWSCryptographicAlgorithmFactory
 public abstract class JWSSerialization {
 
 	protected JWSCryptographicAlgorithmFactory jwsCryptographicAlgorithmFactory = new DefaultJWSCryptographicAlgorithmFactory();
+	protected boolean payloadDetached;
 	
 	/**
 	 * @param jwsCryptographicAlgorithmFactory the jwsCryptographicAlgorithmFactory to set
@@ -27,7 +28,21 @@ public abstract class JWSSerialization {
 	public void setJwsCryptographicAlgorithmFactory(JWSCryptographicAlgorithmFactory jwsCryptographicAlgorithmFactory) {
 		this.jwsCryptographicAlgorithmFactory = jwsCryptographicAlgorithmFactory;
 	}
+	
+	/**
+	 * @param payloadDetached the payloadDetached to set
+	 */
+	public void setPayloadDetached(boolean payloadDetached) {
+		this.payloadDetached = payloadDetached;
+	}
 
+	/**
+	 * @return the payloadDetached
+	 */
+	public boolean isPayloadDetached() {
+		return payloadDetached;
+	}
+	
 //	protected byte[] encodeJwsJoseHeader(final JWSJOSEHeader jwsJOSEHeader) throws EncodingException {
 ////		PreConditions.checkArgument(jwsJOSEHeader != null, "No JWS JOSE Header was specified.");
 //		return base64UrlEncode(toUTF8Bytes(jwsJOSEHeader.toString()));
@@ -37,7 +52,7 @@ public abstract class JWSSerialization {
 ////		PreConditions.checkArgument(jwsPayload != null, "No JWS Payload was specified.");
 //		return base64UrlEncode(jwsPayload.getEncoded());
 //	}
-	
+
 	protected byte[] generateJwsSignature(final byte[] jwsSigningInput, final Key key, final JWSAlgorithm jwsAlgorithm) throws EncodingException, GeneralSecurityException {
 		PreConditions.checkArgument(jwsSigningInput != null && jwsSigningInput.length > 0, "No JWS Signing Input was specified.");
 //		PreConditions.checkArgument(key != null, "No cryptographic key was specified.");

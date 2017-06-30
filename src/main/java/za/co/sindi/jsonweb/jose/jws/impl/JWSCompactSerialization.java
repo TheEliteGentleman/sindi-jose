@@ -3,7 +3,6 @@
  */
 package za.co.sindi.jsonweb.jose.jws.impl;
 
-import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 
@@ -31,14 +30,15 @@ public class JWSCompactSerialization extends JWSSerialization {
 		PreConditions.checkArgument(key != null, "No cryptographic key was specified.");
 		
 		try {
-			byte[] jwsSigningInput = JWSUtils.generateJwsSigningInput(jwsJOSEHeader, jwsPayload);
 			StringBuilder sb = new StringBuilder();
-			sb.append(Strings.asASCIIString(jwsSigningInput))
+			sb.append(Strings.asASCIIString(JWSUtils.encodeJwsJoseHeader(jwsJOSEHeader)))
 			  .append(JWSConstants.JWS_APPEND_SEPARATOR)
-			  .append(Strings.asASCIIString(generateJwsSignature(jwsSigningInput, key, jwsJOSEHeader.getAlgorithm())));
+			  .append(payloadDetached ? "" : Strings.asASCIIString(JWSUtils.encodeJwsPayload(jwsPayload)))
+			  .append(JWSConstants.JWS_APPEND_SEPARATOR)
+			  .append(Strings.asASCIIString(generateJwsSignature(JWSUtils.generateJwsSigningInput(jwsJOSEHeader, jwsPayload), key, jwsJOSEHeader.getAlgorithm())));
 			
 			return sb.toString();
-		} catch (IOException | EncodingException | GeneralSecurityException e) {
+		} catch (EncodingException | GeneralSecurityException e) {
 			// TODO Auto-generated catch block
 			throw new JWSException(e);
 		}
