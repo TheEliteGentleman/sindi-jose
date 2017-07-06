@@ -25,7 +25,7 @@ public class JWSCompactSerialization extends JWSSerialization {
 
 	public String serialize(final JWSJOSEHeader jwsJOSEHeader, final JWSPayload jwsPayload, final Key key) throws JWSException {
 		PreConditions.checkArgument(jwsJOSEHeader != null, "No JWS JOSE Header was specified.");
-		PreConditions.checkState(jwsJOSEHeader.getAlgorithm() != null, "Now JWS Algorithm was specified.");
+		PreConditions.checkState(jwsJOSEHeader.getAlgorithm() != null, "No JWS Algorithm was found.");
 		PreConditions.checkArgument(jwsPayload != null, "No JWS Payload was specified.");
 		PreConditions.checkArgument(key != null, "No cryptographic key was specified.");
 		

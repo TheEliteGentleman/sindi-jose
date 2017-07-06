@@ -20,7 +20,7 @@ import za.co.sindi.jsonweb.jose.jws.impl.DefaultJWSCryptographicAlgorithmFactory
 public abstract class JWSSerialization {
 
 	protected JWSCryptographicAlgorithmFactory jwsCryptographicAlgorithmFactory = new DefaultJWSCryptographicAlgorithmFactory();
-	protected boolean payloadDetached;
+	protected boolean payloadDetached = false;
 	
 	/**
 	 * @param jwsCryptographicAlgorithmFactory the jwsCryptographicAlgorithmFactory to set
@@ -36,12 +36,12 @@ public abstract class JWSSerialization {
 		this.payloadDetached = payloadDetached;
 	}
 
-	/**
-	 * @return the payloadDetached
-	 */
-	public boolean isPayloadDetached() {
-		return payloadDetached;
-	}
+//	/**
+//	 * @return the payloadDetached
+//	 */
+//	public boolean isPayloadDetached() {
+//		return payloadDetached;
+//	}
 	
 //	protected byte[] encodeJwsJoseHeader(final JWSJOSEHeader jwsJOSEHeader) throws EncodingException {
 ////		PreConditions.checkArgument(jwsJOSEHeader != null, "No JWS JOSE Header was specified.");

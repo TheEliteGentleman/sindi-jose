@@ -37,12 +37,12 @@ public abstract class JWSDeserialization {
 		this.jwsCryptographicAlgorithmFactory = jwsCryptographicAlgorithmFactory;
 	}
 	
-	/**
-	 * @param payloadDetached the payloadDetached to set
-	 */
-	public void setPayloadDetached(boolean payloadDetached) {
-		this.payloadDetached = payloadDetached;
-	}
+//	/**
+//	 * @param payloadDetached the payloadDetached to set
+//	 */
+//	public void setPayloadDetached(boolean payloadDetached) {
+//		this.payloadDetached = payloadDetached;
+//	}
 
 	/**
 	 * @return the payloadDetached
