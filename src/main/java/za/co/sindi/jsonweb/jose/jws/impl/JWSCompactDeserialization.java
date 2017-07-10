@@ -8,6 +8,7 @@ import za.co.sindi.common.utils.Strings;
 import java.security.Key;
 
 import za.co.sindi.common.utils.PreConditions;
+import za.co.sindi.jsonweb.jose.jws.JWSAlgorithm;
 import za.co.sindi.jsonweb.jose.jws.JWSConstants;
 import za.co.sindi.jsonweb.jose.jws.JWSDeserialization;
 import za.co.sindi.jsonweb.jose.jws.JWSException;
@@ -76,20 +77,34 @@ public class JWSCompactDeserialization extends JWSDeserialization {
 	public void deserialize(final String encodedJwsString, final Key key) throws JWSException {
 		PreConditions.checkArgument(!Strings.isNullOrEmpty(encodedJwsString), "No JWS Compact Serialized string was provided.");
 		String[] jwsEncodedStringParts = encodedJwsString.split("\\" + JWSConstants.JWS_APPEND_SEPARATOR);
-		PreConditions.checkState(jwsEncodedStringParts.length == 3, "The JWS Compact Serialized string has only " + jwsEncodedStringParts.length + " parts instead of 3.");
+//		PreConditions.checkState(jwsEncodedStringParts.length == 3, "The JWS Compact Serialized string has only " + jwsEncodedStringParts.length + " parts instead of 3.");
 		
 		try {
 			jwsJOSEHeader = decodeJwsJoseHeader(jwsEncodedStringParts[0]);
-			if (!Strings.isNullOrEmpty(jwsEncodedStringParts[1])) {
-				unsignedJwsPayload = base64UrlDecode(jwsEncodedStringParts[1]);
-			} else {
-				payloadDetached = true;
-				
-				if (unsignedJwsPayload == null || unsignedJwsPayload.length == 0) {
-					throw new JWSException("The JWS Compact Serialization string contact no JWS Payload, thus making it detached. Please provide a JWS Payload in order to validate the JWS message.");
+			if (jwsEncodedStringParts.length != 3) {
+				if (!JWSAlgorithm.NONE.equals(jwsJOSEHeader.getAlgorithm())) {
+					throw new JWSException("The JWS Compact Serialized string is inconsistent and has only " + jwsEncodedStringParts.length + " parts instead of 3.");
 				}
+				
+				if (!encodedJwsString.endsWith(".")) {
+					throw new JWSException("The JWS Compact Serialized string has a \"" + JWSAlgorithm.NONE.getJwaAlgorithmName() + "\" algorithm but has a non-empty octet string (probably looks like a JWS Signature).");
+				}
+				
+				payloadDetached = jwsEncodedStringParts.length == 1;
+			} else {
+				PreConditions.checkArgument(!JWSAlgorithm.NONE.equals(jwsJOSEHeader.getAlgorithm()) && key != null, "No cryptographic key was specified.");
+				payloadDetached = Strings.isNullOrEmpty(jwsEncodedStringParts[1]);
 			}
-			validationSuccess = verifyJwsSignature(jwsJOSEHeader, JWSPayloads.newPayload(unsignedJwsPayload), key, base64UrlDecode(jwsEncodedStringParts[2]));
+			
+			if (!payloadDetached) {
+				unsignedJwsPayload = base64UrlDecode(jwsEncodedStringParts[1]);
+			}
+			
+			if (unsignedJwsPayload == null || unsignedJwsPayload.length == 0) {
+				throw new JWSException(payloadDetached ? "The JWS Compact Serialization string contact no JWS Payload, thus making it detached. Please provide a JWS Payload in order to validate the JWS message." : "The JWS Compact Serialization string contact no JWS Payload, though the content is not detached.");
+			}
+			
+			validationSuccess = JWSAlgorithm.NONE.equals(jwsJOSEHeader.getAlgorithm()) ? true : verifyJwsSignature(jwsJOSEHeader, JWSPayloads.newPayload(unsignedJwsPayload), key, base64UrlDecode(jwsEncodedStringParts[2]));
 //			if (!validationSuccess) {
 //				throw new JWSException("Failed to verify encoded JWS String (" + encodedJwsString + ") with JWS Algorithm '" + jwsJOSEHeader.getAlgorithm().getJwaAlgorithmName() + "'.");
 //			}

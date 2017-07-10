@@ -31,6 +31,22 @@ public class JOSETest {
 
 	public static final String PAYLOAD_STRING = "The true sign of intelligence is not knowledge but imagination.";
 	
+	public static void testJWSCompactNoneSerialization() throws JWSException {
+		JWSAlgorithm algorithm = JWSAlgorithm.NONE;
+		JWSObjectBuilder jwsBuilder = JOSE.createJWSObjectBuilder(algorithm).setType(MediaType.JWT);
+		JWSJOSEHeader header = jwsBuilder.build();
+		
+		JWSCompactSerialization serializer = new JWSCompactSerialization();
+//			serializer.setPayloadDetached(true);
+		String serializedJws = serializer.serialize(header, JWSPayloads.newPayload(PAYLOAD_STRING), null);
+		System.out.println(serializedJws);
+		
+		//Verify and deserialize
+		JWSCompactDeserialization deserializer = new JWSCompactDeserialization();
+		deserializer.deserialize(serializedJws, null);
+		System.out.println("Payload: " + Strings.asUTF8String(deserializer.getUnsignedJwsPayload()));
+	}
+	
 	public static void testJWSCompactSerialization() throws JWSException {
 		try {
 			JWSAlgorithm algorithm = JWSAlgorithm.HS256;
@@ -94,8 +110,12 @@ public class JOSETest {
 //			System.out.println(Strings.asUTF8String(Base64Codec.getBase64UrlSafeCodec().withoutPadding().encode(Strings.toASCIIBytes("foob"))));
 //			System.out.println(Strings.asUTF8String(Base64Codec.getBase64UrlSafeCodec().withoutPadding().decode(Strings.toASCIIBytes("Zm9vYg"))));
 //			System.out.println(Strings.asUTF8String(Base64Codec.getBase64UrlSafeCodec().decode(Strings.toASCIIBytes("Zm9vYmE="))));
+			testJWSCompactNoneSerialization();
+			System.out.println();
 			testJWSCompactSerialization();
+			System.out.println();
 			testJWSJSONSerialization();
+			System.out.println();
 		} catch (JWSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

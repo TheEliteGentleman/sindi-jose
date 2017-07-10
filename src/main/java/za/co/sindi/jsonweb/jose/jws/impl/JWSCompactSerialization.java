@@ -9,6 +9,7 @@ import java.security.Key;
 import za.co.sindi.codec.Strings;
 import za.co.sindi.codec.exception.EncodingException;
 import za.co.sindi.common.utils.PreConditions;
+import za.co.sindi.jsonweb.jose.jws.JWSAlgorithm;
 import za.co.sindi.jsonweb.jose.jws.JWSConstants;
 import za.co.sindi.jsonweb.jose.jws.JWSException;
 import za.co.sindi.jsonweb.jose.jws.JWSJOSEHeader;
@@ -27,7 +28,11 @@ public class JWSCompactSerialization extends JWSSerialization {
 		PreConditions.checkArgument(jwsJOSEHeader != null, "No JWS JOSE Header was specified.");
 		PreConditions.checkState(jwsJOSEHeader.getAlgorithm() != null, "No JWS Algorithm was found.");
 		PreConditions.checkArgument(jwsPayload != null, "No JWS Payload was specified.");
-		PreConditions.checkArgument(key != null, "No cryptographic key was specified.");
+//		PreConditions.checkArgument(!JWSAlgorithm.NONE.equals(jwsJOSEHeader.getAlgorithm()) && key != null, "No cryptographic key was specified.");
+	
+		if (!JWSAlgorithm.NONE.equals(jwsJOSEHeader.getAlgorithm()) && key == null) {
+			throw new JWSException("No cryptographic key was specified.");
+		}
 		
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -35,7 +40,7 @@ public class JWSCompactSerialization extends JWSSerialization {
 			  .append(JWSConstants.JWS_APPEND_SEPARATOR)
 			  .append(payloadDetached ? "" : Strings.asASCIIString(JWSUtils.encodeJwsPayload(jwsPayload)))
 			  .append(JWSConstants.JWS_APPEND_SEPARATOR)
-			  .append(Strings.asASCIIString(generateJwsSignature(JWSUtils.generateJwsSigningInput(jwsJOSEHeader, jwsPayload), key, jwsJOSEHeader.getAlgorithm())));
+			  .append(JWSAlgorithm.NONE.equals(jwsJOSEHeader.getAlgorithm()) ? "" : Strings.asASCIIString(generateJwsSignature(JWSUtils.generateJwsSigningInput(jwsJOSEHeader, jwsPayload), key, jwsJOSEHeader.getAlgorithm())));
 			
 			return sb.toString();
 		} catch (EncodingException | GeneralSecurityException e) {

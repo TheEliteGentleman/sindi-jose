@@ -3,11 +3,13 @@
  */
 package za.co.sindi.jsonweb.jose.jws.impl;
 
+import java.security.GeneralSecurityException;
 import java.security.Key;
 
 import za.co.sindi.codec.Strings;
 import za.co.sindi.codec.exception.EncodingException;
 import za.co.sindi.common.utils.PreConditions;
+import za.co.sindi.jsonweb.jose.jwk.PrivateJWK;
 import za.co.sindi.jsonweb.jose.jws.JWSException;
 import za.co.sindi.jsonweb.jose.jws.JWSJOSEHeader;
 import za.co.sindi.jsonweb.jose.jws.JWSJSONSerialization;
@@ -47,6 +49,17 @@ public class GeneralJWSJSONSerialization extends JWSJSONSerialization {
 		this.jsonBuilderFactory = jsonBuilderFactory;
 		signaturesArrayBuilder = jsonBuilderFactory.createJSONArrayBuilder();
 	}
+	
+	public GeneralJWSJSONSerialization addSignature(final JWSJOSEHeader protectedJwsHeader, final JWSJOSEHeader unprotectedJwsHeader, final PrivateJWK privateJwk) throws JWSException {
+		PreConditions.checkArgument(privateJwk != null, "No Private JWK was specified.");
+		
+		try {
+			return addSignature(protectedJwsHeader, unprotectedJwsHeader, privateJwk.toJCAPrivateKey());
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			throw new JWSException(e);
+		}
+	}
 
 	public GeneralJWSJSONSerialization addSignature(final JWSJOSEHeader protectedJwsHeader, final JWSJOSEHeader unprotectedJwsHeader, final Key key) throws JWSException {
 		PreConditions.checkArgument(protectedJwsHeader != null || unprotectedJwsHeader != null, "A JWS Protected or Unprotected Header is required.");
@@ -62,7 +75,7 @@ public class GeneralJWSJSONSerialization extends JWSJSONSerialization {
 				jsonObjectBuilder.add("header", unprotectedJwsHeader.toString());
 			}
 			
-			jsonObjectBuilder.add("signature", Strings.asASCIIString(generateJwsSignature(protectedJwsHeader, protectedJwsHeader, key)));
+			jsonObjectBuilder.add("signature", generateJwsSignatureString(protectedJwsHeader, protectedJwsHeader, key));
 			
 			signaturesArrayBuilder.add(jsonObjectBuilder);
 		} catch (EncodingException e) {
