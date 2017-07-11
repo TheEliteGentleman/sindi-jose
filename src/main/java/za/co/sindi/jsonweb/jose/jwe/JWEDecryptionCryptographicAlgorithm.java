@@ -16,8 +16,7 @@ import za.co.sindi.jsonweb.jose.jwa.CryptographicAlgorithm;
  */
 public interface JWEDecryptionCryptographicAlgorithm extends CryptographicAlgorithm<JWEAlgorithm> {
 
+	public byte[] decrypt() throws GeneralSecurityException;
 	public void initDecrypt(final Key key) throws GeneralSecurityException;
-	public byte[] decrypt(final byte[] encryptedData) throws GeneralSecurityException;
-	public byte[] decrypt(final byte[] encryptedData, int offset, int length) throws GeneralSecurityException;
 	public int update(ByteBuffer input, ByteBuffer output) throws GeneralSecurityException;
 }

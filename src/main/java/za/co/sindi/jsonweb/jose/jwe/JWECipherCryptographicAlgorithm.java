@@ -118,20 +118,11 @@ public abstract class JWECipherCryptographicAlgorithm extends JWECryptographicAl
 	}
 	
 	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwe.JWEDecryptionCryptographicAlgorithm#decrypt(byte[])
+	 * @see za.co.sindi.jsonweb.jose.jwe.JWEDecryptionCryptographicAlgorithm#decrypt()
 	 */
 	@Override
-	public byte[] decrypt(byte[] encryptedData) throws GeneralSecurityException {
+	public byte[] decrypt() throws GeneralSecurityException {
 		// TODO Auto-generated method stub
-		return CIPHER.doFinal(encryptedData);
-	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwe.JWEDecryptionCryptographicAlgorithm#decrypt(byte[], int, int)
-	 */
-	@Override
-	public byte[] decrypt(byte[] encryptedData, int offset, int length) throws GeneralSecurityException {
-		// TODO Auto-generated method stub
-		return CIPHER.doFinal(encryptedData, offset, length);
+		return CIPHER.doFinal();
 	}
 }
