@@ -27,6 +27,14 @@ public class GeneralJWSJSONDeserialization extends JWSJSONDeserialization {
 	private JWSPayload jwsPayload;
 	
 	/**
+	 * 
+	 */
+	public GeneralJWSJSONDeserialization() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
 	 * @param jwsPayload
 	 */
 	public GeneralJWSJSONDeserialization(JWSPayload jwsPayload) {

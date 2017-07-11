@@ -3,6 +3,7 @@
  */
 package za.co.sindi.jsonweb.jose.jws;
 
+import java.nio.ByteBuffer;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 
@@ -19,7 +20,7 @@ public interface JWSVerificationCryptographicAlgorithm extends CryptographicAlgo
 	public void initVerify(final Key key) throws GeneralSecurityException;
 //	public void update(byte[] input) throws GeneralSecurityException;
 //	public void update(byte[] input, int offset, int length) throws GeneralSecurityException;
-//	public void update(ByteBuffer input) throws GeneralSecurityException;
+	public void update(ByteBuffer input) throws GeneralSecurityException;
 	public boolean verify(final byte[] signature) throws GeneralSecurityException;
 	public boolean verify(final byte[] signature, int offset, int length) throws GeneralSecurityException;
 }

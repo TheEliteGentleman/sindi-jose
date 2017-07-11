@@ -24,6 +24,15 @@ public class FlattenedJWSJSONDeserialization extends JWSJSONDeserialization {
 	private JWSPayload jwsPayload;
 	
 	/**
+	 * 
+	 */
+	public FlattenedJWSJSONDeserialization() {
+		this(null);
+		// TODO Auto-generated constructor stub
+	}
+
+
+	/**
 	 * @param jwsPayload
 	 */
 	public FlattenedJWSJSONDeserialization(JWSPayload jwsPayload) {

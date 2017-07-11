@@ -32,6 +32,14 @@ public class GeneralJWSJSONSerialization extends JWSJSONSerialization {
 	private JSONArrayBuilder signaturesArrayBuilder;
 	
 	/**
+	 * 
+	 */
+	public GeneralJWSJSONSerialization() {
+		this(null);
+		// TODO Auto-generated constructor stub
+	}
+	
+	/**
 	 * @param jwsPayload
 	 */
 	public GeneralJWSJSONSerialization(JWSPayload jwsPayload) {
@@ -50,7 +58,7 @@ public class GeneralJWSJSONSerialization extends JWSJSONSerialization {
 		signaturesArrayBuilder = jsonBuilderFactory.createJSONArrayBuilder();
 	}
 	
-	public GeneralJWSJSONSerialization addSignature(final JWSJOSEHeader protectedJwsHeader, final JWSJOSEHeader unprotectedJwsHeader, final PrivateJWK privateJwk) throws JWSException {
+	public GeneralJWSJSONSerialization addSignature(final JWSJOSEHeader protectedJwsHeader, final JSONObject unprotectedJwsHeader, final PrivateJWK privateJwk) throws JWSException {
 		PreConditions.checkArgument(privateJwk != null, "No Private JWK was specified.");
 		
 		try {
@@ -61,7 +69,7 @@ public class GeneralJWSJSONSerialization extends JWSJSONSerialization {
 		}
 	}
 
-	public GeneralJWSJSONSerialization addSignature(final JWSJOSEHeader protectedJwsHeader, final JWSJOSEHeader unprotectedJwsHeader, final Key key) throws JWSException {
+	public GeneralJWSJSONSerialization addSignature(final JWSJOSEHeader protectedJwsHeader, final JSONObject unprotectedJwsHeader, final Key key) throws JWSException {
 		PreConditions.checkArgument(protectedJwsHeader != null || unprotectedJwsHeader != null, "A JWS Protected or Unprotected Header is required.");
 		PreConditions.checkArgument(key != null, "No cryptographic key was specified.");
 		
@@ -72,10 +80,10 @@ public class GeneralJWSJSONSerialization extends JWSJSONSerialization {
 			}
 			
 			if (unprotectedJwsHeader != null) {
-				jsonObjectBuilder.add("header", unprotectedJwsHeader.toString());
+				jsonObjectBuilder.add("header", unprotectedJwsHeader);
 			}
 			
-			jsonObjectBuilder.add("signature", generateJwsSignatureString(protectedJwsHeader, protectedJwsHeader, key));
+			jsonObjectBuilder.add("signature", generateJwsSignatureString(protectedJwsHeader, unprotectedJwsHeader, key));
 			
 			signaturesArrayBuilder.add(jsonObjectBuilder);
 		} catch (EncodingException e) {

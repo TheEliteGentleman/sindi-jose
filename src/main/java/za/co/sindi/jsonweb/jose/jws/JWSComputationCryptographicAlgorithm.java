@@ -3,6 +3,7 @@
  */
 package za.co.sindi.jsonweb.jose.jws;
 
+import java.nio.ByteBuffer;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 
@@ -19,6 +20,6 @@ public interface JWSComputationCryptographicAlgorithm extends CryptographicAlgor
 	public void initSign(final Key key) throws GeneralSecurityException;
 //	public void update(byte[] input) throws GeneralSecurityException;
 //	public void update(byte[] input, int offset, int length) throws GeneralSecurityException;
-//	public void update(ByteBuffer input) throws GeneralSecurityException;
+	public void update(ByteBuffer input) throws GeneralSecurityException;
 	public byte[] compute() throws GeneralSecurityException;
 }

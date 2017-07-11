@@ -29,8 +29,16 @@ public class FlattenedJWSJSONSerialization extends JWSJSONSerialization {
 
 	private JSONBuilderFactory jsonBuilderFactory;
 	private JWSJOSEHeader protectedJwsHeader;
-	private JWSJOSEHeader unprotectedJwsHeader;
+	private JSONObject unprotectedJwsHeader;
 	private Key key;
+	
+	/**
+	 * @param jwsPayload
+	 */
+	public FlattenedJWSJSONSerialization() {
+		this(null);
+		// TODO Auto-generated constructor stub
+	}
 	
 	/**
 	 * @param jwsPayload
@@ -50,7 +58,7 @@ public class FlattenedJWSJSONSerialization extends JWSJSONSerialization {
 		this.jsonBuilderFactory = jsonBuilderFactory;
 	}
 	
-	public void signWith(final JWSJOSEHeader protectedJwsHeader, final JWSJOSEHeader unprotectedJwsHeader, final PrivateJWK privateJwk) throws JWSException {
+	public void signWith(final JWSJOSEHeader protectedJwsHeader, final JSONObject unprotectedJwsHeader, final PrivateJWK privateJwk) throws JWSException {
 		PreConditions.checkArgument(privateJwk != null, "No Private JWK was specified.");
 		
 		try {
@@ -61,7 +69,7 @@ public class FlattenedJWSJSONSerialization extends JWSJSONSerialization {
 		}
 	}
 
-	public void signWith(final JWSJOSEHeader protectedJwsHeader, final JWSJOSEHeader unprotectedJwsHeader, final Key key) {
+	public void signWith(final JWSJOSEHeader protectedJwsHeader, final JSONObject unprotectedJwsHeader, final Key key) {
 		PreConditions.checkArgument(protectedJwsHeader != null || unprotectedJwsHeader != null, "A JWS Protected or Unprotected Header is required.");
 		PreConditions.checkArgument(key != null, "No cryptographic key was specified.");
 		
@@ -87,10 +95,10 @@ public class FlattenedJWSJSONSerialization extends JWSJSONSerialization {
 			}
 			
 			if (unprotectedJwsHeader != null) {
-				jsonObjectBuilder.add("header", unprotectedJwsHeader.toString());
+				jsonObjectBuilder.add("header", unprotectedJwsHeader);
 			}
 			
-			jsonObjectBuilder.add("signature", generateJwsSignatureString(protectedJwsHeader, protectedJwsHeader, key));
+			jsonObjectBuilder.add("signature", generateJwsSignatureString(protectedJwsHeader, unprotectedJwsHeader, key));
 		} catch (EncodingException e) {
 			// TODO Auto-generated catch block
 			throw new JWSException(e);
