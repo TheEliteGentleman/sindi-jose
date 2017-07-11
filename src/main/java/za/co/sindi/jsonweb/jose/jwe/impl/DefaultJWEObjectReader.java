@@ -14,9 +14,11 @@ import za.co.sindi.jsonweb.jose.jwa.Algorithms;
 import za.co.sindi.jsonweb.jose.jwe.CompressionAlgorithm;
 import za.co.sindi.jsonweb.jose.jwe.EncryptionAlgorithm;
 import za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm;
+import za.co.sindi.jsonweb.jose.jwe.JWEConstants;
 import za.co.sindi.jsonweb.jose.jwe.JWEJOSEHeader;
 import za.co.sindi.jsonweb.jose.jwe.JWEObjectBuilder;
 import za.co.sindi.jsonweb.jose.jwe.JWEObjectReader;
+import za.co.sindi.jsonweb.jose.jwk.JWKConstants;
 import za.co.sindi.jsonweb.jose.jwk.JWKKeyTypeUtils;
 import za.co.sindi.jsonweb.jose.jwk.KeyType;
 import za.co.sindi.jsonweb.jose.jwk.PublicJWK;
@@ -37,9 +39,9 @@ public class DefaultJWEObjectReader extends AbstractJWObjectReader<JWEJOSEHeader
 	@Override
 	protected JWEJOSEHeader readObjectFully(JSONObject jsonObject) throws Exception {
 		// TODO Auto-generated method stub
-		JWEObjectBuilder builder = JOSE.createJWEObjectBuilder((JWEAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(Constants.JOSE_HEADER_ALGORITHM)), (EncryptionAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(za.co.sindi.jsonweb.jose.jwe.JWEConstants.JWE_HEADER_ENCRYPTION_ALGORITHM)));
-		if (!jsonObject.isNull(za.co.sindi.jsonweb.jose.jwe.JWEConstants.JWE_HEADER_COMPRESSION_ALGORITHM)) {
-			builder.setCompressionAlgorithm(CompressionAlgorithm.of(jsonObject.getString(za.co.sindi.jsonweb.jose.jwe.JWEConstants.JWE_HEADER_COMPRESSION_ALGORITHM)));
+		JWEObjectBuilder builder = JOSE.createJWEObjectBuilder((JWEAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(Constants.JOSE_HEADER_ALGORITHM)), (EncryptionAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(JWEConstants.JWE_HEADER_ENCRYPTION_ALGORITHM)));
+		if (!jsonObject.isNull(JWEConstants.JWE_HEADER_COMPRESSION_ALGORITHM)) {
+			builder.setCompressionAlgorithm(CompressionAlgorithm.of(jsonObject.getString(JWEConstants.JWE_HEADER_COMPRESSION_ALGORITHM)));
 		}
 			
 		if (!jsonObject.isNull(Constants.JOSE_HEADER_JWK_SET_URL)) {
@@ -48,7 +50,7 @@ public class DefaultJWEObjectReader extends AbstractJWObjectReader<JWEJOSEHeader
 		
 		if (!jsonObject.isNull(Constants.JOSE_HEADER_JWK)) {
 			JSONObject jwkObject = jsonObject.getJSONObject(Constants.JOSE_HEADER_JWK);
-			KeyType keyType = KeyType.of(jwkObject.getString(za.co.sindi.jsonweb.jose.jwk.JWKConstants.JWK_KEY_TYPE));
+			KeyType keyType = KeyType.of(jwkObject.getString(JWKConstants.JWK_KEY_TYPE));
 //			builder.setJSONWebKey((PublicJWK) JWKeys.getJWK(keyType));
 			builder.setJSONWebKey((PublicJWK)JWKKeyTypeUtils.getJWKObjectReader(keyType).readObject(jwkObject));
 		}
