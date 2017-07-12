@@ -8,6 +8,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.Provider;
 import java.security.Security;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 
 import za.co.sindi.common.utils.PreConditions;
 import za.co.sindi.jsonweb.jose.jws.JWSAlgorithm;
@@ -51,12 +53,29 @@ public abstract class SHAwithRSAJWSCryptographicAlgorithm extends JWSSignatureCr
 		super(algorithm, provider);
 	}
 	
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jws.JWSSignatureCryptographicAlgorithm#validateSignatureKey(java.security.Key)
+	 */
 	@Override
-	protected void validateKey(final Key key, Class<? extends Key> keyClass) {
-		super.validateKey(key, keyClass);
-//		PreConditions.checkArgument(key != null, "A Signature key is required.");
-////		PreConditions.checkArgument(key instanceof PrivateKey, "A Signature Private key is required.");
-//		PreConditions.checkArgument(keyClass.isInstance(key), "A Signature key is required of (" + keyClass.getSimpleName() + ").");
+	protected void validateSignatureKey(Key key) {
+		// TODO Auto-generated method stub
+		super.validateSignatureKey(key);
+		PreConditions.checkArgument(key instanceof RSAPrivateKey, "A RSA Private Key Signature key is required.");
+		validateKeyLength(key);
+	}
+
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jws.JWSSignatureCryptographicAlgorithm#validateVerificationKey(java.security.Key)
+	 */
+	@Override
+	protected void validateVerificationKey(Key key) {
+		// TODO Auto-generated method stub
+		super.validateVerificationKey(key);
+		PreConditions.checkArgument(key instanceof RSAPublicKey, "A RSA Public Key Signature key is required.");
+		validateKeyLength(key);
+	}
+
+	protected void validateKeyLength(final Key key) {
 		PreConditions.checkState(key.getEncoded().length * 8 >= MINIMUM_KEY_BIT_LENGTH, "A key of size " + MINIMUM_KEY_BIT_LENGTH + " bits or larger MUST be used with these algorithms. Please see Section 3.2 of the RFC 7518 - JWA Specification.");
 	}
 

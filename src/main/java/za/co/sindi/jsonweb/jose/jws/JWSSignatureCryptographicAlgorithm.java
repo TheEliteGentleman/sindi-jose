@@ -15,8 +15,6 @@ import java.security.Security;
 import java.security.Signature;
 
 import za.co.sindi.common.utils.PreConditions;
-import za.co.sindi.jsonweb.jose.jws.JWSAlgorithm;
-import za.co.sindi.jsonweb.jose.jws.JWSCryptographicAlgorithm;
 
 /**
  * @author Bienfait Sindi
@@ -56,10 +54,25 @@ public abstract class JWSSignatureCryptographicAlgorithm extends JWSCryptographi
 		super(algorithm);
 		SIGNATURE = provider != null ? Signature.getInstance(algorithm.getJcaAlgorithmName(), provider) : Signature.getInstance(algorithm.getJcaAlgorithmName());
 	}
-	
-	protected void validateKey(final Key key, Class<? extends Key> keyClass) {
+
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jws.JWSCryptographicAlgorithm#validateSignatureKey(java.security.Key)
+	 */
+//	@Override
+	protected void validateSignatureKey(Key key) {
+		// TODO Auto-generated method stub
 		PreConditions.checkArgument(key != null, "A Signature key is required.");
-		PreConditions.checkArgument(keyClass.isInstance(key), "A Signature key is required of (" + keyClass.getSimpleName() + ").");
+		PreConditions.checkArgument(key instanceof PrivateKey, "A Private Key Signature is required.");
+	}
+
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jws.JWSCryptographicAlgorithm#validateVerificationKey(java.security.Key)
+	 */
+//	@Override
+	protected void validateVerificationKey(Key key) {
+		// TODO Auto-generated method stub
+		PreConditions.checkArgument(key != null, "A Signature key is required.");
+		PreConditions.checkArgument(key instanceof PublicKey, "A Public Key Signature key is required.");
 	}
 
 	/* (non-Javadoc)
@@ -68,7 +81,7 @@ public abstract class JWSSignatureCryptographicAlgorithm extends JWSCryptographi
 	@Override
 	public void initSign(Key key) throws GeneralSecurityException {
 		// TODO Auto-generated method stub
-		validateKey(key, PrivateKey.class);
+		validateSignatureKey(key);
 		SIGNATURE.initSign((PrivateKey) key);
 	}
 
@@ -78,7 +91,7 @@ public abstract class JWSSignatureCryptographicAlgorithm extends JWSCryptographi
 	@Override
 	public void initVerify(Key key) throws GeneralSecurityException {
 		// TODO Auto-generated method stub
-		validateKey(key, PublicKey.class);
+		validateVerificationKey(key);
 		SIGNATURE.initVerify((PublicKey) key);
 	}
 

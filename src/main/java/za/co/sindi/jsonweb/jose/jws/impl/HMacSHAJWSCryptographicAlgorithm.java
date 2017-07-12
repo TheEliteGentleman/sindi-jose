@@ -49,9 +49,6 @@ public abstract class HMacSHAJWSCryptographicAlgorithm extends JWSCryptographicA
 	 */
 	protected HMacSHAJWSCryptographicAlgorithm(JWSAlgorithm algorithm, final String provider, final int miminumKeyLength) throws NoSuchAlgorithmException {
 		this(algorithm, Security.getProvider(provider), miminumKeyLength);
-//		super(algorithm);
-//		MAC = provider != null ? Mac.getInstance(algorithm.getJcaAlgorithmName(), provider) : Mac.getInstance(algorithm.getJcaAlgorithmName());
-//		this.miminumKeyLength = miminumKeyLength;
 	}
 	
 	/**
@@ -88,7 +85,8 @@ public abstract class HMacSHAJWSCryptographicAlgorithm extends JWSCryptographicA
 	@Override
 	public void initVerify(Key key) throws GeneralSecurityException {
 		// TODO Auto-generated method stub
-		initSign(key);
+		validateKey(key);
+		MAC.init(key);
 	}
 
 	/* (non-Javadoc)

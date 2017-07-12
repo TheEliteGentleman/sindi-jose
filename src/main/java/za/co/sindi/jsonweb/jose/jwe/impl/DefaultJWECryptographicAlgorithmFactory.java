@@ -22,11 +22,11 @@ import za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory;
 public class DefaultJWECryptographicAlgorithmFactory implements JWECryptographicAlgorithmFactory {
 
 	private static final Logger LOGGER = Logger.getLogger(DefaultJWECryptographicAlgorithmFactory.class.getName());
-	private static final Map<JWEAlgorithm, JWECryptographicAlgorithm> JWE_SIGNATURES;
+	private static final Map<JWEAlgorithm, JWECryptographicAlgorithm> JWE_ALGORITHMS;
 	
 	static {
-		Map<JWEAlgorithm, JWECryptographicAlgorithm> jwsAlgorithms = new LinkedHashMap<>();
-		JWE_SIGNATURES = Collections.unmodifiableMap(jwsAlgorithms);
+		Map<JWEAlgorithm, JWECryptographicAlgorithm> jweAlgorithms = new LinkedHashMap<>();
+		JWE_ALGORITHMS = Collections.unmodifiableMap(jweAlgorithms);
 	}
 	
 	/* (non-Javadoc)
@@ -45,7 +45,43 @@ public class DefaultJWECryptographicAlgorithmFactory implements JWECryptographic
 	public JWECryptographicAlgorithm newCryptographicAlgorithm(JWEAlgorithm algorithm) {
 		// TODO Auto-generated method stub
 		PreConditions.checkArgument(algorithm != null, "A JWE Algorithm type is required.");
-		PreConditions.checkArgument(JWE_SIGNATURES.containsKey(algorithm), "No JWE Encryption algorithm has been registered for JWE Algorithm '" + algorithm.getJwaAlgorithmName() + "'.");
-		return JWE_SIGNATURES.get(algorithm);
+		PreConditions.checkArgument(JWE_ALGORITHMS.containsKey(algorithm), "No JWE Encryption algorithm has been registered for JWE Algorithm '" + algorithm.getJwaAlgorithmName() + "'.");
+		return JWE_ALGORITHMS.get(algorithm);
+	}
+
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyEncryptionCryptographicAlgorithm(java.lang.String)
+	 */
+	@Override
+	public JWEKeyEncryptionCryptographicAlgorithm newKeyEncryptionCryptographicAlgorithm(String jwaAlgorithmName) {
+		// TODO Auto-generated method stub
+		return (JWEKeyEncryptionCryptographicAlgorithm) newCryptographicAlgorithm(jwaAlgorithmName);
+	}
+
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyEncryptionCryptographicAlgorithm(za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm)
+	 */
+	@Override
+	public JWEKeyEncryptionCryptographicAlgorithm newKeyEncryptionCryptographicAlgorithm(JWEAlgorithm algorithm) {
+		// TODO Auto-generated method stub
+		return (JWEKeyEncryptionCryptographicAlgorithm) newCryptographicAlgorithm(algorithm);
+	}
+
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyWrappingCryptographicAlgorithm(java.lang.String)
+	 */
+	@Override
+	public JWEKeyWrappingCryptographicAlgorithm newKeyWrappingCryptographicAlgorithm(String jwaAlgorithmName) {
+		// TODO Auto-generated method stub
+		return (JWEKeyWrappingCryptographicAlgorithm) newCryptographicAlgorithm(jwaAlgorithmName);
+	}
+
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyWrappingCryptographicAlgorithm(za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm)
+	 */
+	@Override
+	public JWEKeyWrappingCryptographicAlgorithm newKeyWrappingCryptographicAlgorithm(JWEAlgorithm algorithm) {
+		// TODO Auto-generated method stub
+		return (JWEKeyWrappingCryptographicAlgorithm) newCryptographicAlgorithm(algorithm);
 	}
 }

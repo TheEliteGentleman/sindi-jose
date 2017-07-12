@@ -36,17 +36,17 @@ public class EllipticCurveJWKObjectReader extends AbstractJWKObjectReader<Ellipt
 	@Override
 	protected void build(EllipticCurveJWKObjectBuilder jwkObjectBuilder, JSONObject jsonObject) throws Exception {
 		// TODO Auto-generated method stub
-		PreConditions.checkState(!jsonObject.isNull(JWKConstants.EC_PARAM_CURVE), "No JWK Elliptic Curve parameter '" + JWKConstants.EC_PARAM_CURVE + "' found.");
-		PreConditions.checkState(!jsonObject.isNull(JWKConstants.EC_PARAM_X_COORDINATE), "No JWK Elliptic Curve parameter '" + JWKConstants.EC_PARAM_X_COORDINATE + "' found.");
-//		PreConditions.checkState(!jsonObject.isNull(Constants.EC_PARAM_Y_COORDINATE), "No JWK Elliptic Curve parameter '" + Constants.EC_PARAM_Y_COORDINATE + "' found.");
+		PreConditions.checkState(jsonObject.containsKey(JWKConstants.EC_PARAM_CURVE) && !jsonObject.isNull(JWKConstants.EC_PARAM_CURVE), "No JWK Elliptic Curve parameter '" + JWKConstants.EC_PARAM_CURVE + "' found.");
+		PreConditions.checkState(jsonObject.containsKey(JWKConstants.EC_PARAM_X_COORDINATE) && !jsonObject.isNull(JWKConstants.EC_PARAM_X_COORDINATE), "No JWK Elliptic Curve parameter '" + JWKConstants.EC_PARAM_X_COORDINATE + "' found.");
+//		PreConditions.checkState(jsonObject.containsKey(JWKConstants.EC_PARAM_Y_COORDINATE) && !jsonObject.isNull(Constants.EC_PARAM_Y_COORDINATE), "No JWK Elliptic Curve parameter '" + Constants.EC_PARAM_Y_COORDINATE + "' found.");
 		
 		jwkObjectBuilder.setCurve(ECCurve.of(jsonObject.getString(JWKConstants.EC_PARAM_CURVE)));
 		jwkObjectBuilder.setCoordinateX(new Base64URLUInt(jsonObject.getString(JWKConstants.EC_PARAM_X_COORDINATE)));
-		if (!jsonObject.isNull(JWKConstants.EC_PARAM_Y_COORDINATE)) {
+		if (jsonObject.containsKey(JWKConstants.EC_PARAM_Y_COORDINATE) && !jsonObject.isNull(JWKConstants.EC_PARAM_Y_COORDINATE)) {
 			jwkObjectBuilder.setCoordinateY(new Base64URLUInt(jsonObject.getString(JWKConstants.EC_PARAM_Y_COORDINATE)));
 		}
 		
-		if (!jsonObject.isNull(JWKConstants.EC_PARAM_ECC_PRIVATE_KEY)) {
+		if (jsonObject.containsKey(JWKConstants.EC_PARAM_ECC_PRIVATE_KEY) && !jsonObject.isNull(JWKConstants.EC_PARAM_ECC_PRIVATE_KEY)) {
 			jwkObjectBuilder.setPrivateKey(new Base64URLUInt(jsonObject.getString(JWKConstants.EC_PARAM_ECC_PRIVATE_KEY)));
 		}
 	}

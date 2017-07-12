@@ -29,7 +29,7 @@ public class DefaultJWKSetObjectReader implements JWKSetObjectReader {
 	public JWKSet readObject(JSONObject jsonObject) throws Exception {
 		// TODO Auto-generated method stub
 		PreConditions.checkArgument(jsonObject != null, "No JSON object was provided.");
-		PreConditions.checkState(!jsonObject.isNull(JWKConstants.JWK_KEYS), "No JWK Key Set parameter '" + JWKConstants.JWK_KEYS + "' found.");
+		PreConditions.checkState(jsonObject.containsKey(JWKConstants.JWK_KEYS) && !jsonObject.isNull(JWKConstants.JWK_KEYS), "No JWK Key Set parameter '" + JWKConstants.JWK_KEYS + "' found.");
 		
 		JWKSetObjectBuilder builder = JOSE.createJWKSetObjectBuilder();
 		JSONArray jsonArray = jsonObject.getJSONArray(JWKConstants.JWK_KEYS);

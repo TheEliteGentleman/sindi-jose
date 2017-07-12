@@ -37,26 +37,26 @@ public class DefaultJWSObjectReader extends AbstractJWObjectReader<JWSJOSEHeader
 		// TODO Auto-generated method stub
 		JWSObjectBuilder builder = JOSE.createJWSObjectBuilder((JWSAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(Constants.JOSE_HEADER_ALGORITHM)));
 		
-		if (!jsonObject.isNull(Constants.JOSE_HEADER_JWK_SET_URL)) {
+		if (jsonObject.containsKey(Constants.JOSE_HEADER_JWK_SET_URL) && !jsonObject.isNull(Constants.JOSE_HEADER_JWK_SET_URL)) {
 			builder.setJWKSetURI(URI.create(Constants.JOSE_HEADER_JWK_SET_URL));
 		}
 		
-		if (!jsonObject.isNull(Constants.JOSE_HEADER_JWK)) {
+		if (jsonObject.containsKey(Constants.JOSE_HEADER_JWK) && !jsonObject.isNull(Constants.JOSE_HEADER_JWK)) {
 			JSONObject jwkObject = jsonObject.getJSONObject(Constants.JOSE_HEADER_JWK);
 			KeyType keyType = KeyType.of(jwkObject.getString(za.co.sindi.jsonweb.jose.jwk.JWKConstants.JWK_KEY_TYPE));
 			builder.setJSONWebKey((PublicJWK) JWKKeyTypeUtils.getJWKObjectReader(keyType).readObject(jwkObject));
 //			builder.setJSONWebKey((PublicJWK) JWKeys.getJWK(keyType));
 		}
 		
-		if (!jsonObject.isNull(Constants.JOSE_HEADER_KEY_ID)) {
+		if (jsonObject.containsKey(Constants.JOSE_HEADER_KEY_ID) && !jsonObject.isNull(Constants.JOSE_HEADER_KEY_ID)) {
 			builder.setKeyId(jsonObject.getString(Constants.JOSE_HEADER_KEY_ID));
 		}
 		
-		if (!jsonObject.isNull(Constants.JOSE_HEADER_X509_URL)) {
+		if (jsonObject.containsKey(Constants.JOSE_HEADER_X509_URL) && !jsonObject.isNull(Constants.JOSE_HEADER_X509_URL)) {
 			builder.setX590URI(URI.create(jsonObject.getString(Constants.JOSE_HEADER_X509_URL)));
 		}
 		
-		if (!jsonObject.isNull(Constants.JOSE_HEADER_X509_CERTIFICATE_CHAIN)) {
+		if (jsonObject.containsKey(Constants.JOSE_HEADER_X509_CERTIFICATE_CHAIN) && !jsonObject.isNull(Constants.JOSE_HEADER_X509_CERTIFICATE_CHAIN)) {
 			JSONArray jsonArray = jsonObject.getJSONArray(Constants.JOSE_HEADER_X509_CERTIFICATE_CHAIN);
 			if (!jsonArray.isEmpty()) {
 //				CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
@@ -67,15 +67,15 @@ public class DefaultJWSObjectReader extends AbstractJWObjectReader<JWSJOSEHeader
 			}
 		}
 		
-		if (!jsonObject.isNull(Constants.JOSE_HEADER_X509_CERTIIFICATE_SHA1_THUMBPRINT)) {
+		if (jsonObject.containsKey(Constants.JOSE_HEADER_X509_CERTIIFICATE_SHA1_THUMBPRINT) && !jsonObject.isNull(Constants.JOSE_HEADER_X509_CERTIIFICATE_SHA1_THUMBPRINT)) {
 			builder.setX509CertificateSHA1Thumbprint(jsonObject.getString(Constants.JOSE_HEADER_X509_CERTIIFICATE_SHA1_THUMBPRINT));
 		}
 		
-		if (!jsonObject.isNull(Constants.JOSE_HEADER_X509_CERTIFICATE_SHA256_THUMBPRINT)) {
+		if (jsonObject.containsKey(Constants.JOSE_HEADER_X509_CERTIFICATE_SHA256_THUMBPRINT) && !jsonObject.isNull(Constants.JOSE_HEADER_X509_CERTIFICATE_SHA256_THUMBPRINT)) {
 			builder.setX509CertificateSHA256Thumbprint(jsonObject.getString(Constants.JOSE_HEADER_X509_CERTIFICATE_SHA256_THUMBPRINT));
 		}
 		
-		if (!jsonObject.isNull(Constants.JOSE_HEADER_TYPE)) {
+		if (jsonObject.containsKey(Constants.JOSE_HEADER_TYPE) && !jsonObject.isNull(Constants.JOSE_HEADER_TYPE)) {
 			builder.setType(MediaType.from(jsonObject.getString(Constants.JOSE_HEADER_TYPE)));
 		}
 		

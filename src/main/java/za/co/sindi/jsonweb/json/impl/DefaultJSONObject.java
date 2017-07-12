@@ -160,9 +160,10 @@ public class DefaultJSONObject implements JSONObject {
 	 */
 	public boolean isNull(String name) {
 		// TODO Auto-generated method stub
-		if (!containsKey(name)) {
-			return true;
-		}
+		PreConditions.checkArgument(containsKey(name), "JSON attribute '" + name + "' doesn't exist.");
+//		if (!containsKey(name)) {
+//			return true;
+//		}
 		
 		Object value = jsonObject.get(name);
 		return (value instanceof JSONNull || (value instanceof net.sf.json.JSONObject && ((net.sf.json.JSONObject)value).isNullObject()));

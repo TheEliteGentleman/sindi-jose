@@ -35,7 +35,7 @@ public class SymmetricJWKObjectReader extends AbstractJWKObjectReader<SymmetricJ
 	@Override
 	protected void build(SymmetricJWKObjectBuilder jwkObjectBuilder, JSONObject jsonObject) throws Exception {
 		// TODO Auto-generated method stub
-		PreConditions.checkState(!jsonObject.isNull(JWKConstants.OCT_PARAM_KEY_VALUE), "JWK Symmetric key value '" + JWKConstants.OCT_PARAM_KEY_VALUE + "' is null or doesn't exist.");
+		PreConditions.checkState(jsonObject.containsKey(JWKConstants.OCT_PARAM_KEY_VALUE) && !jsonObject.isNull(JWKConstants.OCT_PARAM_KEY_VALUE), "JWK Symmetric key value '" + JWKConstants.OCT_PARAM_KEY_VALUE + "' is null or doesn't exist.");
 		jwkObjectBuilder.setKeyValue(new Base64URLBytes(jsonObject.getString(JWKConstants.OCT_PARAM_KEY_VALUE)));
 	}
 }
