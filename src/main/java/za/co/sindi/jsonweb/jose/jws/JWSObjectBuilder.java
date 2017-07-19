@@ -16,6 +16,8 @@ import za.co.sindi.jsonweb.jose.jwk.PublicJWK;
  *
  */
 public interface JWSObjectBuilder extends JWObjectBuilder<JWSJOSEHeader> {
+	
+	public JWSObjectBuilder setAlgorithm(final JWSAlgorithm algorithm);
 
 	public JWSObjectBuilder setJWKSetURI(final URI jwkSetURI);
 	

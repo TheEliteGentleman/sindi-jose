@@ -29,11 +29,11 @@ public abstract class JWSJSONSerialization extends JWSSerialization {
 		this.jwsPayload = jwsPayload;
 	}
 	
-	protected String generateJwsSignatureString(final JWSJOSEHeader protectedJwsHeader, final JSONObject unprotectedJwsHeader, final Key key) throws JWSException {
+	protected String generateJwsSignatureString(final JWSJOSEHeader protectedJwsHeader, final JWSJOSEHeader unprotectedJwsHeader, final Key key) throws JWSException {
 		try {
 			JWSJOSEHeader jwsJOSEHeader = protectedJwsHeader;
 			if (protectedJwsHeader != null && unprotectedJwsHeader != null) {
-				JSONObject mergedJSONObject = JSONUtils.merge(protectedJwsHeader.toJSONObject(), unprotectedJwsHeader);
+				JSONObject mergedJSONObject = JSONUtils.merge(protectedJwsHeader.toJSONObject(), unprotectedJwsHeader.toJSONObject());
 				JWSObjectReader jwsObjectReader = new DefaultJWSObjectReader();
 				jwsJOSEHeader = jwsObjectReader.readObject(mergedJSONObject);
 			}

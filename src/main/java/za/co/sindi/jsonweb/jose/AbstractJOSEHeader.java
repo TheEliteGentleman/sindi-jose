@@ -46,79 +46,6 @@ public abstract class AbstractJOSEHeader<JWA extends Algorithm> extends Abstract
 	private MediaType contentType;
 	private Set<String> criticalHeaders;
 	private Map<String, Object> privateParameters= new LinkedHashMap<String, Object>();
-	
-	/**
-	 * @param algorithm
-	 */
-	protected AbstractJOSEHeader(JWA algorithm) {
-		super();
-		PreConditions.checkArgument(algorithm != null, "A JWA algorithm is required (See RFC 7518 of the list of JWA algorithms that you can specify).");
-		this.algorithm = algorithm;
-	}
-	
-//	/**
-//	 * @param algorithm
-//	 */
-//	protected BaseJOSEHeader(JWA algorithm) {
-//		super(algorithm);
-//	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.JWObject#read(za.co.sindi.jsonweb.json.JSONObject)
-	 */
-//	@Override
-//	public void read(JSONObject jsonObject) throws Exception {
-//		// TODO Auto-generated method stub
-////		PreConditions.checkArgument(jsonObject != null, "No JSON object was provided.");
-////		PreConditions.checkState(!jsonObject.isNull(Constants.JOSE_HEADER_ALGORITHM), "No JOSE parameter '" + Constants.JOSE_HEADER_ALGORITHM + "' found.");
-////		
-////		algorithm = Algorithms.getAlgorithm(jsonObject.getString(Constants.JOSE_HEADER_ALGORITHM));
-//		
-//		super.read(jsonObject);
-//		if (!jsonObject.isNull(Constants.JOSE_HEADER_JWK_SET_URL)) {
-//			setJWKSetURI(URI.create(Constants.JOSE_HEADER_JWK_SET_URL));
-//		}
-//		
-//		if (!jsonObject.isNull(Constants.JOSE_HEADER_JWK)) {
-//			JSONObject jwkObject = jsonObject.getJSONObject(Constants.JOSE_HEADER_JWK);
-//			KeyType keyType = KeyType.of(jwkObject.getString(za.co.sindi.jsonweb.jose.jwk.Constants.JWK_KEY_TYPE));
-//			setJSONWebKey((PublicJWK) JWKeys.getJWK(keyType));
-//		}
-//		
-//		if (!jsonObject.isNull(Constants.JOSE_HEADER_KEY_ID)) {
-//			setKeyId(jsonObject.getString(Constants.JOSE_HEADER_KEY_ID));
-//		}
-//		
-//		if (!jsonObject.isNull(Constants.JOSE_HEADER_X509_URL)) {
-//			setX590URI(URI.create(jsonObject.getString(Constants.JOSE_HEADER_X509_URL)));
-//		}
-//		
-//		if (!jsonObject.isNull(Constants.JOSE_HEADER_X509_CERTIFICATE_CHAIN)) {
-//			JSONArray jsonArray = jsonObject.getJSONArray(Constants.JOSE_HEADER_X509_CERTIFICATE_CHAIN);
-//			if (!jsonArray.isEmpty()) {
-//				CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-//				for (int i = 0; i < jsonArray.size(); i++) {
-//					addX509Certificate((X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(new Base64URLBytes(jsonArray.getString(i)).getActualValue())));
-//				}
-//			}
-//		}
-//		
-//		if (!jsonObject.isNull(Constants.JOSE_HEADER_X509_CERTIIFICATE_SHA1_THUMBPRINT)) {
-//			setX509CertificateSHA1Thumbprint(jsonObject.getString(Constants.JOSE_HEADER_X509_CERTIIFICATE_SHA1_THUMBPRINT));
-//		}
-//		
-//		if (!jsonObject.isNull(Constants.JOSE_HEADER_X509_CERTIFICATE_SHA256_THUMBPRINT)) {
-//			setX509CertificateSHA256Thumbprint(jsonObject.getString(Constants.JOSE_HEADER_X509_CERTIFICATE_SHA256_THUMBPRINT));
-//		}
-//		
-//		if (!jsonObject.isNull(Constants.JOSE_HEADER_TYPE)) {
-//			setType(MediaType.from(jsonObject.getString(Constants.JOSE_HEADER_TYPE)));
-//		}
-//		
-////		if (!jsonObject.isNull(Constants.JOSE_HEADER_CONTENT_TYPE)) {
-////			setContentType(MediaType.from(jsonObject.getString(Constants.JOSE_HEADER_CONTENT_TYPE)));
-////		}
-//	}
 
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.JWObject#toJSONObject()
@@ -128,7 +55,9 @@ public abstract class AbstractJOSEHeader<JWA extends Algorithm> extends Abstract
 		// TODO Auto-generated method stub
 		JSONBuilderFactory factory = new DefaultJSONBuilderFactory();
 		JSONObjectBuilder jsonObjectBuilder = factory.createJSONObjectBuilder();
-		jsonObjectBuilder.add(Constants.JOSE_HEADER_ALGORITHM, getAlgorithm().getJwaAlgorithmName());
+		if (getAlgorithm() != null) {
+			jsonObjectBuilder.add(Constants.JOSE_HEADER_ALGORITHM, getAlgorithm().getJwaAlgorithmName());
+		}
 		
 		if (getJWKSetURI() != null) {
 			jsonObjectBuilder.add(Constants.JOSE_HEADER_JWK_SET_URL, getJWKSetURI().toString());
@@ -139,9 +68,9 @@ public abstract class AbstractJOSEHeader<JWA extends Algorithm> extends Abstract
 		}
 		
 		if (getKeyId() != null) {
-			if (getJSONWebKey() != null) {
-				PreConditions.checkState(getJSONWebKey().getKeyId().equals(getKeyId()), "The Key ID '" + getKeyId() + "' does not match with the JWK key ID '" + getJSONWebKey().getKeyId() + "'.");
-			}
+//			if (getJSONWebKey() != null) {
+//				PreConditions.checkState(getJSONWebKey().getKeyId().equals(getKeyId()), "The Key ID '" + getKeyId() + "' does not match with the JWK key ID '" + getJSONWebKey().getKeyId() + "'.");
+//			}
 			
 			jsonObjectBuilder.add(Constants.JOSE_HEADER_KEY_ID, getKeyId());
 		}
@@ -211,6 +140,10 @@ public abstract class AbstractJOSEHeader<JWA extends Algorithm> extends Abstract
 	public JWA getAlgorithm() {
 		// TODO Auto-generated method stub
 		return algorithm;
+	}
+	
+	public void setAlgorithm(JWA algorithm) {
+		this.algorithm = algorithm;
 	}
 
 	/* (non-Javadoc)
@@ -346,18 +279,12 @@ public abstract class AbstractJOSEHeader<JWA extends Algorithm> extends Abstract
 //	@Override
 	public void setX509CertificateChains(X509Certificate[] x509CertificateChains) {
 		// TODO Auto-generated method stub
-//		if (x509CertificateChains != null) {
-//			List<X509Certificate> certificates = new ArrayList<X509Certificate>();
-//			certificates.addAll(Arrays.asList(x509CertificateChains));
-//			setParameter(Constants.JOSE_HEADER_X509_CERTIFICATE_CHAIN, certificates);
-//		} else {
-//			setParameter(Constants.JOSE_HEADER_X509_CERTIFICATE_CHAIN, null);
-//		}
 		if (x509CertificateChains != null) {
 			if (this.x509CertificateChains == null) {
 				this.x509CertificateChains = new ArrayList<X509Certificate>();
-			}
+			} 
 			
+			this.x509CertificateChains.clear();
 			this.x509CertificateChains.addAll(Arrays.asList(x509CertificateChains));
 		}
 	}

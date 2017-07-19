@@ -18,14 +18,14 @@ import javax.crypto.SecretKey;
 
 import za.co.sindi.common.utils.PreConditions;
 import za.co.sindi.jsonweb.jose.jws.JWSAlgorithm;
-import za.co.sindi.jsonweb.jose.jws.JWSCryptographicAlgorithm;
+import za.co.sindi.jsonweb.jose.jws.AbstractJWSCryptographicAlgorithm;
 
 /**
  * @author Bienfait Sindi
  * @since 12 June 2017
  *
  */
-public abstract class HMacSHAJWSCryptographicAlgorithm extends JWSCryptographicAlgorithm {
+public abstract class HMacSHAJWSCryptographicAlgorithm extends AbstractJWSCryptographicAlgorithm {
 
 	private final Mac MAC;
 	private final int miminumKeyLength;

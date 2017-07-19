@@ -3,60 +3,26 @@
  */
 package za.co.sindi.jsonweb.jose.jwe;
 
+import java.nio.ByteBuffer;
 import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.Provider;
-import java.security.Security;
 
-import javax.crypto.Cipher;
+import javax.crypto.ShortBufferException;
 
-import za.co.sindi.jsonweb.jose.jwa.AbstractCryptographicAlgorithm;
+import za.co.sindi.jsonweb.jose.jwa.CryptographicAlgorithm;
 
 /**
  * @author Bienfait Sindi
- * @since 12 June 2017
+ * @since 17 July 2017
  *
  */
-public abstract class JWECryptographicAlgorithm extends AbstractCryptographicAlgorithm<JWEAlgorithm> {
-	
-	protected final Cipher CIPHER;
+public interface JWECryptographicAlgorithm extends CryptographicAlgorithm<JWEAlgorithm> {
 
-	/**
-	 * @param algorithm
-	 * @param provider
-	 * @throws NoSuchAlgorithmException 
-	 * @throws NoSuchProviderException 
-	 */
-	protected JWECryptographicAlgorithm(JWEAlgorithm algorithm) throws GeneralSecurityException {
-		this(algorithm, (String)null);
-	}
-	
-	/**
-	 * @param algorithm
-	 * @param provider
-	 * @param miminumKeyLength
-	 * @throws NoSuchAlgorithmException 
-	 */
-	protected JWECryptographicAlgorithm(JWEAlgorithm algorithm, final String provider) throws GeneralSecurityException {
-		this(algorithm, Security.getProvider(provider));
-	}
-	
-	/**
-	 * @param algorithm
-	 * @param provider
-	 * @throws NoSuchAlgorithmException 
-	 */
-	protected JWECryptographicAlgorithm(JWEAlgorithm algorithm, Provider provider) throws GeneralSecurityException {
-		super(algorithm);
-		CIPHER = provider != null ? Cipher.getInstance(algorithm.getJcaAlgorithmName(), provider) : Cipher.getInstance(algorithm.getJcaAlgorithmName());
-	}
-
-//	protected void validateEncryptionKey(final Key key) {
-//		PreConditions.checkArgument(key != null, "An encryption key is required.");
-//	}
-//	
-//	protected void validateDecryptionKey(final Key key) {
-//		PreConditions.checkArgument(key != null, "A decryption key is required.");
-//	}
+	public void updateAAD(final byte[] src);
+	public void updateAAD(final byte[] src, int offset, int length);
+	public void updateAAD(final ByteBuffer src);
+	public byte[] update(final byte[] input);
+	public int update(ByteBuffer input, ByteBuffer output) throws GeneralSecurityException;
+	public byte[] update(final byte[] input, int offset, int length);
+	public int update(final byte[] input, int offset, int length, byte[] output) throws ShortBufferException;
+	public int update(final byte[] input, int inputOffset, int inputLength, byte[] output, int outputOffset) throws ShortBufferException;
 }

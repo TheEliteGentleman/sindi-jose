@@ -78,7 +78,7 @@ public class GeneralJWSJSONDeserialization extends JWSJSONDeserialization {
 				JSONObject signedObject = signedSignatures.getJSONObject(i);
 				
 				JWSJOSEHeader protectedJwsHeader = decodeJwsJoseHeader(signedObject.getString("protected"));
-				JSONObject unprotectedJwsHeader = signedObject.containsKey("header") ? signedObject.getJSONObject("header") : null;
+				JWSJOSEHeader unprotectedJwsHeader = signedObject.containsKey("header") ? decodeJwsJoseHeader(signedObject.getJSONObject("header")) : null;
 				
 				boolean signatureValid = verifyJwsSignature(jwsPayload, protectedJwsHeader, unprotectedJwsHeader, signedObject.getString("signature"), securityKeys[i]);
 				results.add(new DefaultJWSSignatureResult(protectedJwsHeader, unprotectedJwsHeader, securityKeys[i], signatureValid));

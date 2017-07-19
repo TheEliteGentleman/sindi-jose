@@ -19,15 +19,8 @@ import za.co.sindi.jsonweb.jose.jws.JWSObjectBuilder;
  */
 public class DefaultJWSObjectBuilder implements JWSObjectBuilder {
 	
-	private JWSHeader jwsHeader;
+	private JWSHeader jwsHeader = new JWSHeader();
 	
-	/**
-	 * @param algorithm
-	 */
-	public DefaultJWSObjectBuilder(JWSAlgorithm algorithm) {
-		jwsHeader = new JWSHeader(algorithm);
-	}
-
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.JWObjectBuilder#build()
 	 */
@@ -35,6 +28,16 @@ public class DefaultJWSObjectBuilder implements JWSObjectBuilder {
 	public JWSJOSEHeader build() {
 		// TODO Auto-generated method stub
 		return jwsHeader;
+	}
+
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jws.JWSObjectBuilder#setAlgorithm(za.co.sindi.jsonweb.jose.jws.JWSAlgorithm)
+	 */
+	@Override
+	public JWSObjectBuilder setAlgorithm(JWSAlgorithm algorithm) {
+		// TODO Auto-generated method stub
+		jwsHeader.setAlgorithm(algorithm);
+		return this;
 	}
 
 	/* (non-Javadoc)

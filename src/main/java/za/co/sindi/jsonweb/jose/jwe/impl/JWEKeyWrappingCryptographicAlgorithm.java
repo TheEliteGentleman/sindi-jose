@@ -3,7 +3,6 @@
  */
 package za.co.sindi.jsonweb.jose.jwe.impl;
 
-import java.nio.ByteBuffer;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.Provider;
@@ -12,8 +11,8 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 
 import za.co.sindi.common.utils.PreConditions;
+import za.co.sindi.jsonweb.jose.jwe.AbstractJWECryptographicAlgorithm;
 import za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm;
-import za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithm;
 import za.co.sindi.jsonweb.jose.jwe.JWEUnwrappingCryptographicAlgorithm;
 import za.co.sindi.jsonweb.jose.jwe.JWEWrappingCryptographicAlgorithm;
 
@@ -22,37 +21,40 @@ import za.co.sindi.jsonweb.jose.jwe.JWEWrappingCryptographicAlgorithm;
  * @since 12 July 2017
  *
  */
-public abstract class JWEKeyWrappingCryptographicAlgorithm extends JWECryptographicAlgorithm implements JWEWrappingCryptographicAlgorithm, JWEUnwrappingCryptographicAlgorithm {
+public abstract class JWEKeyWrappingCryptographicAlgorithm extends AbstractJWECryptographicAlgorithm implements JWEWrappingCryptographicAlgorithm, JWEUnwrappingCryptographicAlgorithm {
 
-	private final int MINIMUM_KEY_BIT_LENGTH = 2048;
-	
+	private int minimumKeyBitLength;
+
 	/**
 	 * @param algorithm
-	 * @throws GeneralSecurityException 
+	 * @param minimumKeyBitLength
+	 * @throws GeneralSecurityException
 	 */
-	protected JWEKeyWrappingCryptographicAlgorithm(JWEAlgorithm algorithm) throws GeneralSecurityException {
+	protected JWEKeyWrappingCryptographicAlgorithm(JWEAlgorithm algorithm, int minimumKeyBitLength) throws GeneralSecurityException {
 		super(algorithm);
-		// TODO Auto-generated constructor stub
+		this.minimumKeyBitLength = minimumKeyBitLength;
 	}
 
 	/**
 	 * @param algorithm
 	 * @param provider
+	 * @param minimumKeyBitLength
 	 * @throws GeneralSecurityException
 	 */
-	public JWEKeyWrappingCryptographicAlgorithm(JWEAlgorithm algorithm, Provider provider) throws GeneralSecurityException {
+	protected JWEKeyWrappingCryptographicAlgorithm(JWEAlgorithm algorithm, String provider, int minimumKeyBitLength) throws GeneralSecurityException {
 		super(algorithm, provider);
-		// TODO Auto-generated constructor stub
+		this.minimumKeyBitLength = minimumKeyBitLength;
 	}
 
 	/**
 	 * @param algorithm
 	 * @param provider
+	 * @param minimumKeyBitLength
 	 * @throws GeneralSecurityException
 	 */
-	public JWEKeyWrappingCryptographicAlgorithm(JWEAlgorithm algorithm, String provider) throws GeneralSecurityException {
+	protected JWEKeyWrappingCryptographicAlgorithm(JWEAlgorithm algorithm, Provider provider, int minimumKeyBitLength) throws GeneralSecurityException {
 		super(algorithm, provider);
-		// TODO Auto-generated constructor stub
+		this.minimumKeyBitLength = minimumKeyBitLength;
 	}
 
 	/* (non-Javadoc)
@@ -62,7 +64,7 @@ public abstract class JWEKeyWrappingCryptographicAlgorithm extends JWECryptograp
 		// TODO Auto-generated method stub
 		PreConditions.checkArgument(key != null, "An encryption key is required.");
 		PreConditions.checkArgument(key instanceof SecretKey, "A Secret key is required.");
-		PreConditions.checkState(key.getEncoded().length * 8 >= MINIMUM_KEY_BIT_LENGTH, "A key of size " + MINIMUM_KEY_BIT_LENGTH + " bits or larger MUST be used with these algorithms. Please see Section 4.2 and section 4.3 of the RFC 7518 - JWA Specification.");
+		PreConditions.checkState(key.getEncoded().length * 8 >= minimumKeyBitLength, "A key of size " + minimumKeyBitLength + " bits or larger MUST be used with these algorithms. Please see Section 4.4 of the RFC 7518 - JWA Specification.");
 	}
 
 	/* (non-Javadoc)
@@ -76,48 +78,22 @@ public abstract class JWEKeyWrappingCryptographicAlgorithm extends JWECryptograp
 	}
 
 	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwe.JWEWrappingCryptographicAlgorithm#wrap()
+	 * @see za.co.sindi.jsonweb.jose.jwe.JWEWrappingCryptographicAlgorithm#wrap(java.security.Key)
 	 */
 	@Override
-	public byte[] wrap() throws GeneralSecurityException {
+	public byte[] wrap(Key key) throws GeneralSecurityException {
 		// TODO Auto-generated method stub
-		return CIPHER.doFinal();
+		PreConditions.checkArgument(key != null, "A wrap key is required.");
+		return CIPHER.wrap(key);
 	}
 
 	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwe.JWEEncryptionCryptographicAlgorithm#update(java.nio.ByteBuffer, java.nio.ByteBuffer)
+	 * @see za.co.sindi.jsonweb.jose.jwe.JWEUnwrappingCryptographicAlgorithm#unwrap(byte[])
 	 */
 	@Override
-	public int update(ByteBuffer input, ByteBuffer output) throws GeneralSecurityException {
+	public Key unwrap(byte[] wrappedKey) throws GeneralSecurityException {
 		// TODO Auto-generated method stub
-		return CIPHER.update(input, output);
-	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwa.CryptographicAlgorithm#update(byte[])
-	 */
-	@Override
-	public void update(byte[] input) throws GeneralSecurityException {
-		// TODO Auto-generated method stub
-		CIPHER.update(input);
-	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwa.CryptographicAlgorithm#update(byte[], int, int)
-	 */
-	@Override
-	public void update(byte[] input, int offset, int length) throws GeneralSecurityException {
-		// TODO Auto-generated method stub
-		CIPHER.update(input, offset, length);
-	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwe.JWEUnwrappingCryptographicAlgorithm#unwrap()
-	 */
-	@Override
-	public byte[] unwrap() throws GeneralSecurityException {
-		// TODO Auto-generated method stub
-		return CIPHER.doFinal();
+		return CIPHER.unwrap(wrappedKey, getAlgorithm().getJcaAlgorithmName(), Cipher.SECRET_KEY);
 	}
 
 	/* (non-Javadoc)

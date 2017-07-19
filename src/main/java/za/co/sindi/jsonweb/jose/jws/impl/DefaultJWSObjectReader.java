@@ -35,7 +35,11 @@ public class DefaultJWSObjectReader extends AbstractJWObjectReader<JWSJOSEHeader
 	@Override
 	protected JWSJOSEHeader readObjectFully(JSONObject jsonObject) throws Exception {
 		// TODO Auto-generated method stub
-		JWSObjectBuilder builder = JOSE.createJWSObjectBuilder((JWSAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(Constants.JOSE_HEADER_ALGORITHM)));
+		JWSObjectBuilder builder = JOSE.createJWSObjectBuilder();
+		
+		if (jsonObject.containsKey(Constants.JOSE_HEADER_ALGORITHM) && !jsonObject.isNull(Constants.JOSE_HEADER_ALGORITHM)) {
+			builder.setAlgorithm((JWSAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(Constants.JOSE_HEADER_ALGORITHM)));
+		}
 		
 		if (jsonObject.containsKey(Constants.JOSE_HEADER_JWK_SET_URL) && !jsonObject.isNull(Constants.JOSE_HEADER_JWK_SET_URL)) {
 			builder.setJWKSetURI(URI.create(Constants.JOSE_HEADER_JWK_SET_URL));

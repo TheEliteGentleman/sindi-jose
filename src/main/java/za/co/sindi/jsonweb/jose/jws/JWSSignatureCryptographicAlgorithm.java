@@ -21,7 +21,7 @@ import za.co.sindi.common.utils.PreConditions;
  * @since 12 June 2017
  *
  */
-public abstract class JWSSignatureCryptographicAlgorithm extends JWSCryptographicAlgorithm {
+public abstract class JWSSignatureCryptographicAlgorithm extends AbstractJWSCryptographicAlgorithm {
 
 	private final Signature SIGNATURE;
 

@@ -38,14 +38,6 @@ public class JWSHeader extends AbstractJOSEHeader<JWSAlgorithm> implements JWSJO
 		
 		REGISTERED_HEADER_NAMES = Collections.unmodifiableSet(registeredHeaderNames);
 	}
-	
-	/**
-	 * @param algorithm
-	 */
-	public JWSHeader(JWSAlgorithm algorithm) {
-		super(algorithm);
-		// TODO Auto-generated constructor stub
-	}
 
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.jose.JOSEHeader#getRegisteredHeaderNames()

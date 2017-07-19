@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import za.co.sindi.common.utils.PreConditions;
 import za.co.sindi.jsonweb.jose.AbstractJOSEHeader;
 import za.co.sindi.jsonweb.jose.Constants;
 import za.co.sindi.jsonweb.jose.JOSEHeader;
@@ -48,30 +47,6 @@ public class JWEHeader extends AbstractJOSEHeader<JWEAlgorithm> implements JWEJO
 	
 	private EncryptionAlgorithm encryptionAlgorithm;
 	private CompressionAlgorithm compressionAlgorithm;
-	
-	/**
-	 * @param algorithm
-	 * @param encryptionAlgorithm
-	 */
-	public JWEHeader(JWEAlgorithm algorithm, EncryptionAlgorithm encryptionAlgorithm) {
-		super(algorithm);
-		PreConditions.checkArgument(encryptionAlgorithm != null, "An encryption algorithm is required.");
-		this.encryptionAlgorithm = encryptionAlgorithm;
-	}
-
-//	/* (non-Javadoc)
-//	 * @see za.co.sindi.jsonweb.jose.BaseJOSEHeader#read(za.co.sindi.jsonweb.json.JSONObject)
-//	 */
-//	@Override
-//	public void read(JSONObject jsonObject) throws Exception {
-//		// TODO Auto-generated method stub
-//		PreConditions.checkState(!jsonObject.isNull(za.co.sindi.jsonweb.jose.jwe.Constants.JWE_HEADER_ENCRYPTION_ALGORITHM) , "The JWE parameter header " + za.co.sindi.jsonweb.jose.jwe.Constants.JWE_HEADER_ENCRYPTION_ALGORITHM + " is required.");
-//		encryptionAlgorithm = Algorithms.getAlgorithm(jsonObject.getString(za.co.sindi.jsonweb.jose.jwe.Constants.JWE_HEADER_ENCRYPTION_ALGORITHM));
-//		if (!jsonObject.isNull(za.co.sindi.jsonweb.jose.jwe.Constants.JWE_HEADER_COMPRESSION_ALGORITHM)) {
-//			compressionAlgorithm = CompressionAlgorithm.of(jsonObject.getString(za.co.sindi.jsonweb.jose.jwe.Constants.JWE_HEADER_COMPRESSION_ALGORITHM));
-//		}
-//		super.read(jsonObject);
-//	}
 
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.jose.JOSEHeader#getRegisteredHeaderNames()
@@ -89,6 +64,11 @@ public class JWEHeader extends AbstractJOSEHeader<JWEAlgorithm> implements JWEJO
 	public EncryptionAlgorithm getEncryptionAlgorithm() {
 		// TODO Auto-generated method stub
 		return encryptionAlgorithm;
+	}
+	
+	public void setEncryptionAlgorithm(EncryptionAlgorithm encryptionAlgorithm) {
+		// TODO Auto-generated method stub
+		this.encryptionAlgorithm = encryptionAlgorithm;
 	}
 
 	/* (non-Javadoc)
@@ -116,9 +96,9 @@ public class JWEHeader extends AbstractJOSEHeader<JWEAlgorithm> implements JWEJO
 	protected void populateJSONObject(JSONObjectBuilder jsonObjectBuilder) {
 		// TODO Auto-generated method stub
 //		super.populateJSONObject(jsonObjectBuilder);
-		jsonObjectBuilder.add(za.co.sindi.jsonweb.jose.jwe.JWEConstants.JWE_HEADER_ENCRYPTION_ALGORITHM, encryptionAlgorithm.getJwaAlgorithmName());
+		jsonObjectBuilder.add(JWEConstants.JWE_HEADER_ENCRYPTION_ALGORITHM, encryptionAlgorithm.getJwaAlgorithmName());
 		if (compressionAlgorithm != null) {
-			jsonObjectBuilder.add(za.co.sindi.jsonweb.jose.jwe.JWEConstants.JWE_HEADER_COMPRESSION_ALGORITHM, compressionAlgorithm.toString());
+			jsonObjectBuilder.add(JWEConstants.JWE_HEADER_COMPRESSION_ALGORITHM, compressionAlgorithm.toString());
 		}
 	}
 }

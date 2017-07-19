@@ -36,22 +36,6 @@ public abstract class JWSSerialization {
 		this.payloadDetached = payloadDetached;
 	}
 
-//	/**
-//	 * @return the payloadDetached
-//	 */
-//	public boolean isPayloadDetached() {
-//		return payloadDetached;
-//	}
-	
-//	protected byte[] encodeJwsJoseHeader(final JWSJOSEHeader jwsJOSEHeader) throws EncodingException {
-////		PreConditions.checkArgument(jwsJOSEHeader != null, "No JWS JOSE Header was specified.");
-//		return base64UrlEncode(toUTF8Bytes(jwsJOSEHeader.toString()));
-//	}
-//	
-//	protected byte[] encodeJwsPayload(final JWSPayload jwsPayload) throws EncodingException {
-////		PreConditions.checkArgument(jwsPayload != null, "No JWS Payload was specified.");
-//		return base64UrlEncode(jwsPayload.getEncoded());
-//	}
 
 	protected byte[] generateJwsSignature(final byte[] jwsSigningInput, final Key key, final JWSAlgorithm jwsAlgorithm) throws EncodingException, GeneralSecurityException {
 		PreConditions.checkArgument(jwsSigningInput != null && jwsSigningInput.length > 0, "No JWS Signing Input was specified.");
@@ -59,7 +43,7 @@ public abstract class JWSSerialization {
 //		PreConditions.checkArgument(jwsAlgorithm != null, "No JWS Digital Signature Algorithm key was specified.");
 //		PreConditions.checkState(jwsSignatureAlgorithmFactory != null, "No JWS Digital Signature factory was specified.");
 		
-		JWSComputationCryptographicAlgorithm jwsCryptographicAlgorithm = jwsCryptographicAlgorithmFactory.newCryptographicAlgorithm(jwsAlgorithm);
+		JWSComputationCryptographicAlgorithm jwsCryptographicAlgorithm = (JWSComputationCryptographicAlgorithm) jwsCryptographicAlgorithmFactory.newCryptographicAlgorithm(jwsAlgorithm);
 		PreConditions.checkState(jwsCryptographicAlgorithm != null, "Couldn't find JWS Digital Signature algorithm for JWS Algorithm '" + jwsAlgorithm.getJwaAlgorithmName() + "'");
 		jwsCryptographicAlgorithm.initSign(key);
 		jwsCryptographicAlgorithm.update(jwsSigningInput);

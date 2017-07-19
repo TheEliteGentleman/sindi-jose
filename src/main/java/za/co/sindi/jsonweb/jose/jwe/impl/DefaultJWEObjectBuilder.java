@@ -21,16 +21,8 @@ import za.co.sindi.jsonweb.jose.jwk.PublicJWK;
  */
 public class DefaultJWEObjectBuilder implements JWEObjectBuilder {
 	
-	private JWEHeader jweHeader;
+	private JWEHeader jweHeader = new JWEHeader();
 	
-	/**
-	 * @param algorithm
-	 * @param encryptionAlgorithm
-	 */
-	public DefaultJWEObjectBuilder(JWEAlgorithm algorithm, EncryptionAlgorithm encryptionAlgorithm) {
-		jweHeader = new JWEHeader(algorithm, encryptionAlgorithm);
-	}
-
 	/* (non-Javadoc)
 	 * @see za.co.sindi.jsonweb.JWObjectBuilder#build()
 	 */
@@ -38,6 +30,16 @@ public class DefaultJWEObjectBuilder implements JWEObjectBuilder {
 	public JWEJOSEHeader build() {
 		// TODO Auto-generated method stub
 		return jweHeader;
+	}
+
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jwe.JWEObjectBuilder#setAlgorithm(za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm)
+	 */
+	@Override
+	public JWEObjectBuilder setAlgorithm(JWEAlgorithm algorithm) {
+		// TODO Auto-generated method stub
+		jweHeader.setAlgorithm(algorithm);
+		return this;
 	}
 
 	/* (non-Javadoc)
@@ -167,6 +169,16 @@ public class DefaultJWEObjectBuilder implements JWEObjectBuilder {
 	public JWEObjectBuilder setCompressionAlgorithm(CompressionAlgorithm compressionAlgorithm) {
 		// TODO Auto-generated method stub
 		jweHeader.setCompressionAlgorithm(compressionAlgorithm);
+		return this;
+	}
+
+	/* (non-Javadoc)
+	 * @see za.co.sindi.jsonweb.jose.jwe.JWEObjectBuilder#setEncryptionAlgorithm(za.co.sindi.jsonweb.jose.jwe.EncryptionAlgorithm)
+	 */
+	@Override
+	public JWEObjectBuilder setEncryptionAlgorithm(EncryptionAlgorithm encryptionAlgorithm) {
+		// TODO Auto-generated method stub
+		jweHeader.setEncryptionAlgorithm(encryptionAlgorithm);
 		return this;
 	}
 }

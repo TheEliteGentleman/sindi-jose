@@ -8,8 +8,8 @@ package za.co.sindi.jsonweb.jose.jwa;
  * @since 12 June 2017
  *
  */
-public interface CryptographicAlgorithmFactory<JWA extends Algorithm> {
+public interface CryptographicAlgorithmFactory<JWA extends Algorithm, CA extends CryptographicAlgorithm<JWA>> {
 
-	public CryptographicAlgorithm<JWA> newCryptographicAlgorithm(final String jwaAlgorithmName);
-	public CryptographicAlgorithm<JWA> newCryptographicAlgorithm(final JWA algorithm);
+	public CA newCryptographicAlgorithm(final String jwaAlgorithmName);
+	public CA newCryptographicAlgorithm(final JWA algorithm);
 }

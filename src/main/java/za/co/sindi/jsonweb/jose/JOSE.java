@@ -3,8 +3,6 @@
  */
 package za.co.sindi.jsonweb.jose;
 
-import za.co.sindi.jsonweb.jose.jwe.EncryptionAlgorithm;
-import za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm;
 import za.co.sindi.jsonweb.jose.jwe.JWEObjectBuilder;
 import za.co.sindi.jsonweb.jose.jwe.JWEObjectReader;
 import za.co.sindi.jsonweb.jose.jwe.impl.DefaultJWEObjectBuilder;
@@ -26,7 +24,6 @@ import za.co.sindi.jsonweb.jose.jwk.impl.DefaultSymmetricJWKObjectBuilder;
 import za.co.sindi.jsonweb.jose.jwk.impl.EllipticCurveJWKObjectReader;
 import za.co.sindi.jsonweb.jose.jwk.impl.RSAJWKObjectReader;
 import za.co.sindi.jsonweb.jose.jwk.impl.SymmetricJWKObjectReader;
-import za.co.sindi.jsonweb.jose.jws.JWSAlgorithm;
 import za.co.sindi.jsonweb.jose.jws.JWSObjectBuilder;
 import za.co.sindi.jsonweb.jose.jws.JWSObjectReader;
 import za.co.sindi.jsonweb.jose.jws.impl.DefaultJWSObjectBuilder;
@@ -47,16 +44,16 @@ public final class JOSE {
 		throw new AssertionError("Private Constructor.");
 	}
 	
-	public static JWEObjectBuilder createJWEObjectBuilder(JWEAlgorithm algorithm, EncryptionAlgorithm encryptionAlgorithm) {
-		return new DefaultJWEObjectBuilder(algorithm, encryptionAlgorithm);
+	public static JWEObjectBuilder createJWEObjectBuilder() {
+		return new DefaultJWEObjectBuilder();
 	}
 	
 	public static JWEObjectReader createJWEObjectReader() {
 		return new DefaultJWEObjectReader();
 	}
 	
-	public static JWSObjectBuilder createJWSObjectBuilder(JWSAlgorithm algorithm) {
-		return new DefaultJWSObjectBuilder(algorithm);
+	public static JWSObjectBuilder createJWSObjectBuilder() {
+		return new DefaultJWSObjectBuilder();
 	}
 	
 	public static JWSObjectReader createJWSObjectReader() {

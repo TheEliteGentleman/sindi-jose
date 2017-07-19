@@ -22,18 +22,6 @@ public final class JWSUtils {
 		throw new AssertionError("Private Constructor.");
 	}
 	
-//	public static JWSJOSEHeader decodeJwsJoseHeader(final String encodedJwsProtectedHeaderString) throws Exception {
-//		String jsonObjectString = asUTF8String(base64UrlDecode(toASCIIBytes(encodedJwsProtectedHeaderString)));
-//		JSONReaderFactory jsonReaderFactory = new DefaultJSONReaderFactory();
-//		JSONReader jsonObjectReader = jsonReaderFactory.createReader(new StringReader(jsonObjectString));
-//		JWSObjectReader jwsObjectReader = new DefaultJWSObjectReader();
-//		return jwsObjectReader.readObject(jsonObjectReader.readJSONObject());
-//	}
-//	
-//	public static <T> T decodeJwsPayload(final String encodedJwsPayloadString, final JWSPayloadDecoder<T> jwsPayloadDecoder) throws DecodingException {
-//		return jwsPayloadDecoder.decode(base64UrlDecode(toASCIIBytes(encodedJwsPayloadString)));
-//	}
-	
 	public static byte[] encodeJwsJoseHeader(final JWSJOSEHeader jwsJOSEHeader) throws EncodingException {
 //		PreConditions.checkArgument(jwsJOSEHeader != null, "No JWS JOSE Header was specified.");
 		return base64UrlEncode(toUTF8Bytes(jwsJOSEHeader.toString()));
@@ -56,27 +44,4 @@ public final class JWSUtils {
 		}
 		return baos.toByteArray();
 	}
-	
-//	public static byte[] generateJwsSignature(final byte[] jwsSigningInput, final Key key, final JWSAlgorithm jwsAlgorithm, JWSCryptographicAlgorithmFactory jwsCryptographicAlgorithmFactory) throws EncodingException, GeneralSecurityException {
-////		PreConditions.checkArgument(jwsSigningInput != null && jwsSigningInput.length > 0, "No JWS Signing Input was specified.");
-////		PreConditions.checkArgument(key != null, "No cryptographic key was specified.");
-////		PreConditions.checkArgument(jwsAlgorithm != null, "No JWS Digital Signature Algorithm key was specified.");
-////		PreConditions.checkState(jwsCryptographicAlgorithmFactory != null, "No JWS Digital Signature factory was specified.");
-//		
-//		JWSComputationCryptographicAlgorithm jwsCryptographicAlgorithm = jwsCryptographicAlgorithmFactory.newCryptographicAlgorithm(jwsAlgorithm);
-//		PreConditions.checkState(jwsCryptographicAlgorithm != null, "Couldn't find JWS Digital Signature algorithm for JWS Algorithm '" + jwsAlgorithm.getJwaAlgorithmName() + "'");
-//		jwsCryptographicAlgorithm.initSign(key);
-//		jwsCryptographicAlgorithm.update(jwsSigningInput);
-//		return base64UrlEncode(jwsCryptographicAlgorithm.compute());
-//	}
-	
-//	public static boolean verifyJwsSignature(final JWSJOSEHeader jwsJoseHeader, final JWSPayload jwsPayload, final Key key, final byte[] jwsSignature, JWSCryptographicAlgorithmFactory jwsCryptographicAlgorithmFactory) throws IOException, EncodingException, GeneralSecurityException {
-//		byte[] jwsSigningInput = generateJwsSigningInput(jwsJoseHeader, jwsPayload);
-//		
-//		JWSVerificationCryptographicAlgorithm jwsCryptographicAlgorithm = jwsCryptographicAlgorithmFactory.newCryptographicAlgorithm(jwsJoseHeader.getAlgorithm());
-//		PreConditions.checkState(jwsCryptographicAlgorithm != null, "Couldn't find JWS Digital Signature algorithm for JWS Algorithm '" + jwsJoseHeader.getAlgorithm().getJwaAlgorithmName() + "'");
-//		jwsCryptographicAlgorithm.initVerify(key);
-//		jwsCryptographicAlgorithm.update(jwsSigningInput);
-//		return jwsCryptographicAlgorithm.verify(jwsSignature);
-//	}
 }

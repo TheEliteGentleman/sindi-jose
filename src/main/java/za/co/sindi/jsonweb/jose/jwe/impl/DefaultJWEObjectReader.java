@@ -39,7 +39,12 @@ public class DefaultJWEObjectReader extends AbstractJWObjectReader<JWEJOSEHeader
 	@Override
 	protected JWEJOSEHeader readObjectFully(JSONObject jsonObject) throws Exception {
 		// TODO Auto-generated method stub
-		JWEObjectBuilder builder = JOSE.createJWEObjectBuilder((JWEAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(Constants.JOSE_HEADER_ALGORITHM)), (EncryptionAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(JWEConstants.JWE_HEADER_ENCRYPTION_ALGORITHM)));
+		JWEObjectBuilder builder = JOSE.createJWEObjectBuilder();
+		
+		if (jsonObject.containsKey(Constants.JOSE_HEADER_ALGORITHM) && !jsonObject.isNull(Constants.JOSE_HEADER_ALGORITHM)) {
+			builder.setAlgorithm((JWEAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(Constants.JOSE_HEADER_ALGORITHM)));
+		}
+		
 		if (jsonObject.containsKey(JWEConstants.JWE_HEADER_COMPRESSION_ALGORITHM) && !jsonObject.isNull(JWEConstants.JWE_HEADER_COMPRESSION_ALGORITHM)) {
 			builder.setCompressionAlgorithm(CompressionAlgorithm.of(jsonObject.getString(JWEConstants.JWE_HEADER_COMPRESSION_ALGORITHM)));
 		}
@@ -84,6 +89,10 @@ public class DefaultJWEObjectReader extends AbstractJWObjectReader<JWEJOSEHeader
 		
 		if (jsonObject.containsKey(Constants.JOSE_HEADER_TYPE) && !jsonObject.isNull(Constants.JOSE_HEADER_TYPE)) {
 			builder.setType(MediaType.from(jsonObject.getString(Constants.JOSE_HEADER_TYPE)));
+		}
+		
+		if (jsonObject.containsKey(JWEConstants.JWE_HEADER_ENCRYPTION_ALGORITHM) && !jsonObject.isNull(JWEConstants.JWE_HEADER_ENCRYPTION_ALGORITHM)) {
+			builder.setEncryptionAlgorithm((EncryptionAlgorithm)Algorithms.getAlgorithm(jsonObject.getString(JWEConstants.JWE_HEADER_ENCRYPTION_ALGORITHM)));
 		}
 		
 		return builder.build();

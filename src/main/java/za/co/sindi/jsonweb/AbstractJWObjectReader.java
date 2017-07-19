@@ -4,7 +4,6 @@
 package za.co.sindi.jsonweb;
 
 import za.co.sindi.common.utils.PreConditions;
-import za.co.sindi.jsonweb.jose.Constants;
 import za.co.sindi.jsonweb.json.JSONObject;
 
 /**
@@ -21,7 +20,7 @@ public abstract class AbstractJWObjectReader<T extends JWObject> implements JWOb
 	public T readObject(JSONObject jsonObject) throws Exception {
 		// TODO Auto-generated method stub
 		PreConditions.checkArgument(jsonObject != null, "No JSON object was provided.");
-		PreConditions.checkState(jsonObject.containsKey(Constants.JOSE_HEADER_ALGORITHM) && !jsonObject.isNull(Constants.JOSE_HEADER_ALGORITHM), "No JOSE parameter '" + Constants.JOSE_HEADER_ALGORITHM + "' found.");
+//		PreConditions.checkState(jsonObject.containsKey(Constants.JOSE_HEADER_ALGORITHM) && !jsonObject.isNull(Constants.JOSE_HEADER_ALGORITHM), "No JOSE parameter '" + Constants.JOSE_HEADER_ALGORITHM + "' found.");
 		
 		return readObjectFully(jsonObject);
 	}

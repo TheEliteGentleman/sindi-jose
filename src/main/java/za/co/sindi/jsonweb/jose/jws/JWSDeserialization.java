@@ -16,6 +16,7 @@ import za.co.sindi.codec.exception.EncodingException;
 import za.co.sindi.common.utils.PreConditions;
 import za.co.sindi.jsonweb.jose.jws.impl.DefaultJWSCryptographicAlgorithmFactory;
 import za.co.sindi.jsonweb.jose.jws.impl.DefaultJWSObjectReader;
+import za.co.sindi.jsonweb.json.JSONObject;
 import za.co.sindi.jsonweb.json.JSONReader;
 import za.co.sindi.jsonweb.json.JSONReaderFactory;
 import za.co.sindi.jsonweb.json.impl.DefaultJSONReaderFactory;
@@ -37,13 +38,6 @@ public abstract class JWSDeserialization {
 		this.jwsCryptographicAlgorithmFactory = jwsCryptographicAlgorithmFactory;
 	}
 	
-//	/**
-//	 * @param payloadDetached the payloadDetached to set
-//	 */
-//	public void setPayloadDetached(boolean payloadDetached) {
-//		this.payloadDetached = payloadDetached;
-//	}
-
 	/**
 	 * @return the payloadDetached
 	 */
@@ -59,18 +53,18 @@ public abstract class JWSDeserialization {
 		String jsonObjectString = asUTF8String(base64UrlDecode(encodedJwsProtectedHeaderString));
 		JSONReaderFactory jsonReaderFactory = new DefaultJSONReaderFactory();
 		JSONReader jsonObjectReader = jsonReaderFactory.createReader(new StringReader(jsonObjectString));
-		JWSObjectReader jwsObjectReader = new DefaultJWSObjectReader();
-		return jwsObjectReader.readObject(jsonObjectReader.readJSONObject());
+		return decodeJwsJoseHeader(jsonObjectReader.readJSONObject());
 	}
 	
-//	protected <T> T decodeJwsPayload(final String encodedJwsPayloadString, final JWSPayloadDecoder<T> jwsPayloadDecoder) throws DecodingException {
-//		return jwsPayloadDecoder.decode(base64UrlDecode(toASCIIBytes(encodedJwsPayloadString)));
-//	}
+	protected JWSJOSEHeader decodeJwsJoseHeader(final JSONObject jwsHeaderJSONObject) throws Exception {
+		JWSObjectReader jwsObjectReader = new DefaultJWSObjectReader();
+		return jwsObjectReader.readObject(jwsHeaderJSONObject);
+	}
 	
 	protected boolean verifyJwsSignature(final JWSJOSEHeader jwsJoseHeader, final JWSPayload jwsPayload, final Key key, final byte[] jwsSignature) throws IOException, EncodingException, GeneralSecurityException {
 		byte[] jwsSigningInput = JWSUtils.generateJwsSigningInput(jwsJoseHeader, jwsPayload);
 		
-		JWSVerificationCryptographicAlgorithm jwsCryptographicAlgorithm = jwsCryptographicAlgorithmFactory.newCryptographicAlgorithm(jwsJoseHeader.getAlgorithm());
+		JWSVerificationCryptographicAlgorithm jwsCryptographicAlgorithm = (JWSVerificationCryptographicAlgorithm) jwsCryptographicAlgorithmFactory.newCryptographicAlgorithm(jwsJoseHeader.getAlgorithm());
 		PreConditions.checkState(jwsCryptographicAlgorithm != null, "Couldn't find JWS Digital Signature algorithm for JWS Algorithm '" + jwsJoseHeader.getAlgorithm().getJwaAlgorithmName() + "'");
 		jwsCryptographicAlgorithm.initVerify(key);
 		jwsCryptographicAlgorithm.update(jwsSigningInput);

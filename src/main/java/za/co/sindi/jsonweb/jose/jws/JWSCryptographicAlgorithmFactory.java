@@ -10,8 +10,8 @@ import za.co.sindi.jsonweb.jose.jwa.CryptographicAlgorithmFactory;
  * @since 19 June 2017
  *
  */
-public interface JWSCryptographicAlgorithmFactory extends CryptographicAlgorithmFactory<JWSAlgorithm> {
+public interface JWSCryptographicAlgorithmFactory extends CryptographicAlgorithmFactory<JWSAlgorithm, JWSCryptographicAlgorithm> {
 
-	public JWSCryptographicAlgorithm newCryptographicAlgorithm(final String jwaAlgorithmName);
-	public JWSCryptographicAlgorithm newCryptographicAlgorithm(final JWSAlgorithm algorithm);
+//	public JWSCryptographicAlgorithm newCryptographicAlgorithm(final String jwaAlgorithmName);
+//	public JWSCryptographicAlgorithm newCryptographicAlgorithm(final JWSAlgorithm algorithm);
 }

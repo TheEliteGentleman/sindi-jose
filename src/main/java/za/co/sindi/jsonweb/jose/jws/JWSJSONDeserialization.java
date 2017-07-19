@@ -21,11 +21,11 @@ import za.co.sindi.jsonweb.util.JSONUtils;
  */
 public abstract class JWSJSONDeserialization extends JWSDeserialization {
 	
-	protected boolean verifyJwsSignature(final JWSPayload jwsPayload, final JWSJOSEHeader protectedJwsHeader, final JSONObject unprotectedJwsHeader, final String encodedJwsSignature, final Key key) throws JWSException {
+	protected boolean verifyJwsSignature(final JWSPayload jwsPayload, final JWSJOSEHeader protectedJwsHeader, final JWSJOSEHeader unprotectedJwsHeader, final String encodedJwsSignature, final Key key) throws JWSException {
 		try {
 			JWSJOSEHeader jwsJOSEHeader = protectedJwsHeader;
 			if (protectedJwsHeader != null && unprotectedJwsHeader != null) {
-				JSONObject mergedJSONObject = JSONUtils.merge(protectedJwsHeader.toJSONObject(), unprotectedJwsHeader);
+				JSONObject mergedJSONObject = JSONUtils.merge(protectedJwsHeader.toJSONObject(), unprotectedJwsHeader.toJSONObject());
 				JWSObjectReader jwsObjectReader = new DefaultJWSObjectReader();
 				jwsJOSEHeader = jwsObjectReader.readObject(mergedJSONObject);
 			}
@@ -53,7 +53,7 @@ public abstract class JWSJSONDeserialization extends JWSDeserialization {
 	protected static class DefaultJWSSignatureResult implements JWSSignatureResult {
 		
 		private JWSJOSEHeader protectedJwsHeader;
-		private JSONObject unprotectedJwsHeader;
+		private JWSJOSEHeader unprotectedJwsHeader;
 		private Key key;
 		private boolean validated;
 
@@ -63,7 +63,7 @@ public abstract class JWSJSONDeserialization extends JWSDeserialization {
 		 * @param key
 		 * @param validated
 		 */
-		public DefaultJWSSignatureResult(JWSJOSEHeader protectedJwsHeader, JSONObject unprotectedJwsHeader, Key key, boolean validated) {
+		public DefaultJWSSignatureResult(JWSJOSEHeader protectedJwsHeader, JWSJOSEHeader unprotectedJwsHeader, Key key, boolean validated) {
 			super();
 			this.protectedJwsHeader = protectedJwsHeader;
 			this.unprotectedJwsHeader = unprotectedJwsHeader;
@@ -84,7 +84,7 @@ public abstract class JWSJSONDeserialization extends JWSDeserialization {
 		 * @see za.co.sindi.jsonweb.jose.jws.JWSSignatureResult#getUnprotectedJwsHeader()
 		 */
 		@Override
-		public JSONObject getUnprotectedJwsHeader() {
+		public JWSJOSEHeader getUnprotectedJwsHeader() {
 			// TODO Auto-generated method stub
 			return unprotectedJwsHeader;
 		}

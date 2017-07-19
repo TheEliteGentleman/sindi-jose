@@ -3,7 +3,6 @@
  */
 package za.co.sindi.jsonweb.jose.jwe.impl;
 
-import java.nio.ByteBuffer;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.Provider;
@@ -13,8 +12,8 @@ import java.security.interfaces.RSAPublicKey;
 import javax.crypto.Cipher;
 
 import za.co.sindi.common.utils.PreConditions;
+import za.co.sindi.jsonweb.jose.jwe.AbstractJWECryptographicAlgorithm;
 import za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm;
-import za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithm;
 import za.co.sindi.jsonweb.jose.jwe.JWEDecryptionCryptographicAlgorithm;
 import za.co.sindi.jsonweb.jose.jwe.JWEEncryptionCryptographicAlgorithm;
 
@@ -23,7 +22,7 @@ import za.co.sindi.jsonweb.jose.jwe.JWEEncryptionCryptographicAlgorithm;
  * @since 12 July 2017
  *
  */
-public abstract class JWEKeyEncryptionCryptographicAlgorithm extends JWECryptographicAlgorithm implements JWEEncryptionCryptographicAlgorithm, JWEDecryptionCryptographicAlgorithm {
+public abstract class JWEKeyEncryptionCryptographicAlgorithm extends AbstractJWECryptographicAlgorithm implements JWEEncryptionCryptographicAlgorithm, JWEDecryptionCryptographicAlgorithm {
 
 	private final int MINIMUM_KEY_BIT_LENGTH = 2048;
 	
@@ -105,33 +104,6 @@ public abstract class JWEKeyEncryptionCryptographicAlgorithm extends JWECryptogr
 	public byte[] encrypt() throws GeneralSecurityException {
 		// TODO Auto-generated method stub
 		return CIPHER.doFinal();
-	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwe.JWEEncryptionCryptographicAlgorithm#update(java.nio.ByteBuffer, java.nio.ByteBuffer)
-	 */
-	@Override
-	public int update(ByteBuffer input, ByteBuffer output) throws GeneralSecurityException {
-		// TODO Auto-generated method stub
-		return CIPHER.update(input, output);
-	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwa.CryptographicAlgorithm#update(byte[])
-	 */
-	@Override
-	public void update(byte[] input) throws GeneralSecurityException {
-		// TODO Auto-generated method stub
-		CIPHER.update(input);
-	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwa.CryptographicAlgorithm#update(byte[], int, int)
-	 */
-	@Override
-	public void update(byte[] input, int offset, int length) throws GeneralSecurityException {
-		// TODO Auto-generated method stub
-		CIPHER.update(input, offset, length);
 	}
 
 	/* (non-Javadoc)

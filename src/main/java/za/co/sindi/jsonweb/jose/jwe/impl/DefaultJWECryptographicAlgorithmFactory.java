@@ -49,39 +49,39 @@ public class DefaultJWECryptographicAlgorithmFactory implements JWECryptographic
 		return JWE_ALGORITHMS.get(algorithm);
 	}
 
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyEncryptionCryptographicAlgorithm(java.lang.String)
-	 */
-	@Override
-	public JWEKeyEncryptionCryptographicAlgorithm newKeyEncryptionCryptographicAlgorithm(String jwaAlgorithmName) {
-		// TODO Auto-generated method stub
-		return (JWEKeyEncryptionCryptographicAlgorithm) newCryptographicAlgorithm(jwaAlgorithmName);
-	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyEncryptionCryptographicAlgorithm(za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm)
-	 */
-	@Override
-	public JWEKeyEncryptionCryptographicAlgorithm newKeyEncryptionCryptographicAlgorithm(JWEAlgorithm algorithm) {
-		// TODO Auto-generated method stub
-		return (JWEKeyEncryptionCryptographicAlgorithm) newCryptographicAlgorithm(algorithm);
-	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyWrappingCryptographicAlgorithm(java.lang.String)
-	 */
-	@Override
-	public JWEKeyWrappingCryptographicAlgorithm newKeyWrappingCryptographicAlgorithm(String jwaAlgorithmName) {
-		// TODO Auto-generated method stub
-		return (JWEKeyWrappingCryptographicAlgorithm) newCryptographicAlgorithm(jwaAlgorithmName);
-	}
-
-	/* (non-Javadoc)
-	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyWrappingCryptographicAlgorithm(za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm)
-	 */
-	@Override
-	public JWEKeyWrappingCryptographicAlgorithm newKeyWrappingCryptographicAlgorithm(JWEAlgorithm algorithm) {
-		// TODO Auto-generated method stub
-		return (JWEKeyWrappingCryptographicAlgorithm) newCryptographicAlgorithm(algorithm);
-	}
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyEncryptionCryptographicAlgorithm(java.lang.String)
+//	 */
+//	@Override
+//	public JWEKeyEncryptionCryptographicAlgorithm newKeyEncryptionCryptographicAlgorithm(String jwaAlgorithmName) {
+//		// TODO Auto-generated method stub
+//		return (JWEKeyEncryptionCryptographicAlgorithm) newCryptographicAlgorithm(jwaAlgorithmName);
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyEncryptionCryptographicAlgorithm(za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm)
+//	 */
+//	@Override
+//	public JWEKeyEncryptionCryptographicAlgorithm newKeyEncryptionCryptographicAlgorithm(JWEAlgorithm algorithm) {
+//		// TODO Auto-generated method stub
+//		return (JWEKeyEncryptionCryptographicAlgorithm) newCryptographicAlgorithm(algorithm);
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyWrappingCryptographicAlgorithm(java.lang.String)
+//	 */
+//	@Override
+//	public JWEKeyWrappingCryptographicAlgorithm newKeyWrappingCryptographicAlgorithm(String jwaAlgorithmName) {
+//		// TODO Auto-generated method stub
+//		return (JWEKeyWrappingCryptographicAlgorithm) newCryptographicAlgorithm(jwaAlgorithmName);
+//	}
+//
+//	/* (non-Javadoc)
+//	 * @see za.co.sindi.jsonweb.jose.jwe.JWECryptographicAlgorithmFactory#newKeyWrappingCryptographicAlgorithm(za.co.sindi.jsonweb.jose.jwe.JWEAlgorithm)
+//	 */
+//	@Override
+//	public JWEKeyWrappingCryptographicAlgorithm newKeyWrappingCryptographicAlgorithm(JWEAlgorithm algorithm) {
+//		// TODO Auto-generated method stub
+//		return (JWEKeyWrappingCryptographicAlgorithm) newCryptographicAlgorithm(algorithm);
+//	}
 }

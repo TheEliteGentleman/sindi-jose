@@ -17,6 +17,8 @@ import za.co.sindi.jsonweb.jose.jwk.PublicJWK;
  */
 public interface JWEObjectBuilder extends JWObjectBuilder<JWEJOSEHeader> {
 	
+	public JWEObjectBuilder setAlgorithm(final JWEAlgorithm algorithm);
+	
 	public JWEObjectBuilder setJWKSetURI(final URI jwkSetURI);
 	
 	public JWEObjectBuilder setJSONWebKey(final PublicJWK jsonWebKey);
@@ -39,5 +41,7 @@ public interface JWEObjectBuilder extends JWObjectBuilder<JWEJOSEHeader> {
 	public JWEObjectBuilder addCriticalHeader(final String criticalHeader);
 	public JWEObjectBuilder setCriticalHeaders(final String[] criticalHeaders);
 
-	public JWEObjectBuilder setCompressionAlgorithm(CompressionAlgorithm compressionAlgorithm);
+	public JWEObjectBuilder setCompressionAlgorithm(final CompressionAlgorithm compressionAlgorithm);
+	
+	public JWEObjectBuilder setEncryptionAlgorithm(final EncryptionAlgorithm encryptionAlgorithm);
 }

@@ -33,7 +33,9 @@ public class JOSETest {
 	
 	public static void testJWSCompactNoneSerialization() throws JWSException {
 		JWSAlgorithm algorithm = JWSAlgorithm.NONE;
-		JWSObjectBuilder jwsBuilder = JOSE.createJWSObjectBuilder(algorithm).setType(MediaType.JWT);
+		JWSObjectBuilder jwsBuilder = JOSE.createJWSObjectBuilder()
+										  .setAlgorithm(algorithm)
+										  .setType(MediaType.JWT);
 		JWSJOSEHeader header = jwsBuilder.build();
 		
 		JWSCompactSerialization serializer = new JWSCompactSerialization();
@@ -50,7 +52,9 @@ public class JOSETest {
 	public static void testJWSCompactSerialization() throws JWSException {
 		try {
 			JWSAlgorithm algorithm = JWSAlgorithm.HS256;
-			JWSObjectBuilder jwsBuilder = JOSE.createJWSObjectBuilder(algorithm).setType(MediaType.JWT);
+			JWSObjectBuilder jwsBuilder = JOSE.createJWSObjectBuilder()
+											  .setAlgorithm(algorithm)
+											  .setType(MediaType.JWT);
 			JWSJOSEHeader header = jwsBuilder.build();
 			KeyGenerator generator = KeyGenerator.getInstance(algorithm.getJcaAlgorithmName());
 			generator.init(256);
@@ -77,7 +81,9 @@ public class JOSETest {
 	public static void testJWSJSONSerialization() throws JWSException {
 		try {
 			JWSAlgorithm algorithm = JWSAlgorithm.HS256;
-			JWSObjectBuilder jwsBuilder = JOSE.createJWSObjectBuilder(algorithm).setType(MediaType.JWT);
+			JWSObjectBuilder jwsBuilder = JOSE.createJWSObjectBuilder()
+											  .setAlgorithm(algorithm)
+											  .setType(MediaType.JWT);
 			JWSJOSEHeader header = jwsBuilder.build();
 			KeyGenerator generator = KeyGenerator.getInstance(algorithm.getJcaAlgorithmName());
 			generator.init(256);

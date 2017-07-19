@@ -64,7 +64,7 @@ public class FlattenedJWSJSONDeserialization extends JWSJSONDeserialization {
 			
 			JWSSignatureResult[] results = new JWSSignatureResult[1];
 			JWSJOSEHeader protectedJwsHeader = decodeJwsJoseHeader(signedJwsDocument.getString("protected"));
-			JSONObject unprotectedJwsHeader = signedJwsDocument.containsKey("header") ? signedJwsDocument.getJSONObject("header") : null;
+			JWSJOSEHeader unprotectedJwsHeader = signedJwsDocument.containsKey("header") ? decodeJwsJoseHeader(signedJwsDocument.getJSONObject("header")) : null;
 			
 			boolean signatureValid = verifyJwsSignature(jwsPayload, protectedJwsHeader, unprotectedJwsHeader, signedJwsDocument.getString("signature"), securityKeys[0]);
 			results[0] = new DefaultJWSSignatureResult(protectedJwsHeader, unprotectedJwsHeader, securityKeys[0], signatureValid);
